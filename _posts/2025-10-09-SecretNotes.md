@@ -1,5 +1,5 @@
 ---
-title: MyFirstSecretNote
+title: First Secret Note
 date: 2025-10-09 20:55:00 +0800
 categories: [SecretNotes, Notes] # 分类里必须包含 SecretNotes
 tags: [secret]
