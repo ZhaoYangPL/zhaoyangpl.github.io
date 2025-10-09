@@ -10,7 +10,7 @@ tags: [new start, jekyll]
 
 Several days ago, one of my friend published his personal homepage. That's so fantasticcccc! And I began to think why not develop a website of my own, which is also my dream? (How could a CS student don't have his own web hahaha)
 
-Yet, I wish you will not think I'm someone flowing with the flow. Give me some time and I'll tell you how my story be told!
+Yet, I wish you will not think I'm someone flowing with the flow. Give me some time and I'll tell you how my story be told! 
 
 So, my dear, **welcome to Weekend's world**!
 
