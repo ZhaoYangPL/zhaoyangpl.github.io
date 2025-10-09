@@ -1,0 +1,132 @@
+{%- capture seo_url -%}{% if site.seo.url %}{{ site.seo.url }}{% elsif site.url %}{{ site.url }}{% endif %}{%- endcapture -%}
+{%- assign seo_url = seo_url | append: site.baseurl -%}
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    {% if page.layout == "home" -%}
+      {{ site.title }}{%- unless site.tagline == empty -%}&nbsp;-&nbsp;{{ site.tagline }}{%- endunless -%}
+    {%- else -%}
+      {{ page.title }}&nbsp;-&nbsp;{{ site.title }}
+    {%- endif %}
+  </title>
+
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+
+  {% include_cached favicons.html %}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
+
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+
+  {% if site.mermaid.enabled %}
+    {% include_cached mermaid.html %}
+  {% endif %}
+
+  {% if site.seo %}
+    <meta name="description" content="{{ page.excerpt | default: site.seo.description | strip_html | normalize_whitespace | truncate: 160 | escape_once }}">
+    <meta name="keywords" content="{{ site.seo.keywords | join: ', ' | escape }}">
+  {% endif %}
+
+  <meta name="theme-color" content="{{ site.theme_color | default: '#000000' }}">
+
+  {% feed_meta %}
+
+  {%- if jekyll.environment == 'production' %}
+    {%- if site.google_analytics.id -%}
+      {%- include_cached analytics.html -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  {% seo title=false %}
+
+
+  <style>
+    /* 模态框背景 */
+    .guestbook-modal-overlay {
+      position: fixed; /* 固定位置，覆盖整个屏幕 */
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7); /* 半透明黑色背景 */
+      z-index: 9998; /* 置于顶层 */
+      display: none; /* 默认隐藏 */
+      justify-content: center;
+      align-items: center;
+    }
+    /* 模态框内容 */
+    .guestbook-modal-content {
+      background-color: #2d2d2d; /* 深色背景，匹配主题 */
+      color: #e2e2e2; /* 浅色文字 */
+      padding: 30px;
+      border-radius: 8px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      z-index: 9999;
+    }
+    .guestbook-modal-content h2 {
+      margin-top: 0;
+    }
+    .guestbook-modal-content input[type="text"] {
+      width: 80%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      border: 1px solid #555;
+      background-color: #3d3d3d;
+      color: #fff;
+    }
+    .guestbook-modal-content button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+
+  <div id="guestbookModal" class="guestbook-modal-overlay">
+    <div class="guestbook-modal-content">
+      <h2>Welcome to Weekend's world</h2>
+      <p>Glad to know name：</p>
+      <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScTAy2apX4SeRLuae-eFza2WToJbLDADKVduKiW4wip8wMJkQ/formResponse?embedded=true" method="POST" target="hidden_iframe" onsubmit="handleFormSubmit()">
+        <input type="text" id="visitor_name" name="entry.1623474267" required placeholder="Please enter your name...">
+        <br>
+        <button type="submit">Enter</button>
+      </form>
+    </div>
+  </div>
+
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
+  <script type="text/javascript">
+    const sessionKey = 'has_left_name';
+
+    function handleFormSubmit() {
+      // 提交后，记住状态并隐藏模态框
+      sessionStorage.setItem(sessionKey, 'true');
+      // 短暂延迟后隐藏，确保表单有时间提交
+      setTimeout(function() {
+        document.getElementById('guestbookModal').style.display = 'none';
+      }, 100); // 100毫秒延迟
+    }
+
+    // 页面加载时运行
+    document.addEventListener('DOMContentLoaded', function() {
+      if (sessionStorage.getItem(sessionKey) !== 'true') {
+        // 如果没留过名，就显示模态框
+        document.getElementById('guestbookModal').style.display = 'flex';
+      }
+    });
+  </script>
+  </head>
