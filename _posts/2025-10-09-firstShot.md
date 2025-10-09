@@ -14,6 +14,6 @@ Yet, I wish you will not think I'm someone flowing with the flow. Give me some t
 
 So, my dear, **welcome to Weekend's world**!
 
-Oct 9th, 2025
+Oct 9th, 2025 
 
 Weekend
