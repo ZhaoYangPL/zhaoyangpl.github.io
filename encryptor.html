@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>专属加密工具</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        body { font-family: sans-serif; margin: 20px; background-color: #f4f4f9; }
+        textarea, input, button { width: 100%; padding: 10px; margin-bottom: 10px; box-sizing: border-box; font-size: 1em; }
+        textarea { height: 150px; }
+        button { background-color: #007bff; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>专属加密工具 (100% 兼容您的网站)</h2>
+    <label for="plainText">输入您的 Markdown 原文:</label>
+    <textarea id="plainText" placeholder="在这里粘贴您的 Markdown 内容..."></textarea>
+    <label for="password">输入您的密码:</label>
+    <input type="password" id="password" placeholder="在这里输入密码...">
+    <button onclick="encryptText()">加密</button>
+    <label for="encryptedText">加密后的文本 (复制这段内容):</label>
+    <textarea id="encryptedText" readonly></textarea>
+    <script>
+        function encryptText() {
+            const plainText = document.getElementById('plainText').value;
+            const password = document.getElementById('password').value;
+            if (!plainText || !password) {
+                alert('原文和密码都不能为空！');
+                return;
+            }
+            const encrypted = CryptoJS.AES.encrypt(plainText, password).toString();
+            document.getElementById('encryptedText').value = encrypted;
+        }
+    </script>
+</body>
+</html>

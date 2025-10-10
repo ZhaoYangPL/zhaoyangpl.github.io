@@ -13,6 +13,9 @@ Class in the morning is 'Database', not so difficult, thus I have time to write 
 
 Well, it may be a good choice to review the class in the morning. [Notes]({% post_url 2025-10-10-SQLServerNotes %})
 
+Class in the afternoon is quite weird, for our CN teacher talked about nothing. Perhaps revise the development of DL.
+
+I found my visa card is completed, so I supposed to wait the card to arrive. Only when I recieve that card, could I deploy the model locally and continue my research.(Also the reason wyhy I have time to write my web hhh)
 
 ***
 I mainly focused on comment section and visitorName system yesterday. Unfortunately, failed in the latter one. I don't think that's unacceptable or I am too weak. Every blossom need time to bloom. Same as my web. It's failure makes me strong!
