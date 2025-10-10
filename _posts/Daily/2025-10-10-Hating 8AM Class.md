@@ -11,7 +11,7 @@ Actually, waking up at 8am is not the worst, but the place. Our classroom is in 
 
 Class in the morning is 'Database', not so difficult, thus I have time to write my diary. And below is my [homework](/assets/file/习题+上机作业3A%202025.docx).
 
-Well, it may be a good choice to review the class in the morning. [Notes](/_posts/Notes/2025-10-10-SQLServerNotes.md)
+Well, it may be a good choice to review the class in the morning. [Notes]({% post_url 2025-10-10-SQLServerNotes %})
 
 
 ***
