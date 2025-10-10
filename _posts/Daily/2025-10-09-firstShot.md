@@ -1,7 +1,7 @@
 ---
 title: This is my first Blog!
 date: 2025-10-09 14:30:00 +0800
-categories: [Blogging, Life]
+categories: [Daily]
 tags: [new start, jekyll]
 ---
 
