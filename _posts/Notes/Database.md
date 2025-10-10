@@ -1,3 +1,10 @@
+---
+title: "SQL Server Notes"
+date: 2025-10-10 13:00:00 +0800
+# categories: [Database]  <-- 您可以添加一个“子分类”，最终这篇文章会同时属于 Notes 和 Database
+tags: [notes]
+---
+
 **as操作符的使用场景：**
 
 1. 查询中使用了函数
