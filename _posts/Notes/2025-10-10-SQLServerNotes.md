@@ -1,7 +1,7 @@
 ---
 title: "SQL Server Notes"
 date: 2025-10-10 13:00:00 +0800
-categories: [Notes]  
+categories: [Notes,Database]  
 tags: [Database]
 ---
 

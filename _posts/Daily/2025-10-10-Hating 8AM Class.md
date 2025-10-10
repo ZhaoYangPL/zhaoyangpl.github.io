@@ -1,7 +1,7 @@
 ---
 title: Hating 8AM Calss!
 date: 2025-10-10 10:46:00 +0800
-categories: [Daily]
+categories: [Daily,Oct_25]
 tags: [daily]
 ---
 

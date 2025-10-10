@@ -1,7 +1,7 @@
 ---
 title: First Secret Note
 date: 2025-10-09 20:55:00 +0800
-categories: [Secret]
+categories: [Secret,Trail]
 tags: [secret]
 layout: secret
 ---
