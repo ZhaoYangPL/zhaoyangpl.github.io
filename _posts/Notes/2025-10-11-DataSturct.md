@@ -5,6 +5,8 @@ categories: [Notes,Data Struct]
 tags: [Data Struct]
 ---
 
+**写在最前面！写链表的时候千万不要忘记# include<stdlib.h>;不要忘记申请动态内存temp = (int*)malloc(sizeof(int)*m);不要忘记free()**
+
 # 线性表
 
 线性结构的特点： 同一种数据对象；只有一个首节点、尾结点；中间节点只有一个前驱，一个后继。
