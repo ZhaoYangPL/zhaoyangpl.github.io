@@ -15,7 +15,7 @@ tags: [Data Struct]
 
 ![稀疏多项式](/assets/img/Course/稀疏多项式.png)
 
-**线性表的类型定义**
+### 线性表的类型定义
 
 ![类型定义](/assets/img/Course/线性表的类型定义.png)
 
