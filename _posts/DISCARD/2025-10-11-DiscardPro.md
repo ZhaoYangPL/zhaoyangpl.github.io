@@ -2,7 +2,7 @@
 title: "Probability Notes"
 date: 2025-10-11 21:21:00 +0800
 categories: [DISCARD,Probability]  
-tags: [Probability,DISCARD]
+tags: [DISCARD]
 ---
 
 **写在前面，庞老师的ppt实在是太过sparse了，不得不再自己整理一下**
