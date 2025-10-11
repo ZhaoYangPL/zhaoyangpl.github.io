@@ -1,5 +1,5 @@
 ---
-title: "SQL Server Notes"
+title: "SQL Server Notes(CourseNotes for Study & Research Only)"
 date: 2025-10-10 13:00:00 +0800
 categories: [Notes,Database]  
 tags: [Database]
