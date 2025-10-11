@@ -1,5 +1,5 @@
 ---
-title: "Probability Notes(CourseNotes for Study & Research Only)"
+title: "Probability Notes"
 date: 2025-10-11 21:21:00 +0800
 categories: [DISCARD,Probability]  
 tags: [Probability,DISCARD]
