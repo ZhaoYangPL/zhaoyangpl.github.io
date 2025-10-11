@@ -7,7 +7,7 @@ tags: [daily]
 
 ## Lecture from CMU!
 
-Today is the first time I listened to a lec in totally English. That's from CMU, [David Woodruff](https://www.cs.cmu.edu/~dwoodruf/), talking about [Game Theory and Optimization Fundamentals](/zhaoyang.github.io/assets/file/lecture14-slides.pdf). This part I've learned a hundred times, I wish the professor could teach something more intresting or pratical. And I am looking forward to some chanllenging assignments.
+Today is the first time I listened to a lec in totally English. That's from CMU, [David Woodruff](https://www.cs.cmu.edu/~dwoodruf/), talking about [Game Theory and Optimization Fundamentals](/assets/file/lecture14-slides.pdf). This part I've learned a hundred times, I wish the professor could teach something more intresting or pratical. And I am looking forward to some chanllenging assignments.
 
 By the way, because of national day holiday adjustment, today's lec conflicts with the adjusted classes. So I was forced to attend two classes at one time. I thought the so called 'Introduction to e-commerce' was just a worthless calss, for the old-fashioned meterials teached and the stubborn professor. Thus, I chose to whatch the live video at the out-fashioned class and... was questioned by my unfriendly pro, millions of needles were stabbing me when silence descend on the whole class but his mordant questions. Bad...
 
