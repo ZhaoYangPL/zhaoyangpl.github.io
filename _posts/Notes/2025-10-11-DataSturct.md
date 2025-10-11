@@ -5,7 +5,7 @@ categories: [Notes,Data Struct]
 tags: [Data Struct]
 ---
 
-**写在最前面！写链表的时候千万不要忘记# include<stdlib.h>;不要忘记申请动态内存temp = (int*)malloc(sizeof(int)*m);不要忘记free()**
+**写在最前面！写链表的时候千万不要忘记# include<stdlib.h>;不要忘记申请动态内存temp = (int*)malloc(sizeof(int)*m);不要忘记free();结构里所有的.改成->**
 
 # 线性表
 
