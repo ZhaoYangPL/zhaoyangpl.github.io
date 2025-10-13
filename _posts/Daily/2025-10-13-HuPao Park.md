@@ -31,3 +31,7 @@ And I felt I was too spendthrift and idle, wasting too much time in enjoying. No
 深化认知: 学习K-Means，对市场进行状态划分，并分析你的策略在不同状态下的表现。
 
 这个过程会强迫你思考所有量化交易的实际问题，远比单纯看视频、学理论要深刻得多。当你亲手完成这样一整个闭环的项目后，你就真正入门了应用机器学习于量化交易。
+
+***
+
+I also register for the WorldQuant Challenge. There are many tutorials to help me learn about Alpha and relavent knowledge, very helpful to me. I think I can also taking notes about it.
