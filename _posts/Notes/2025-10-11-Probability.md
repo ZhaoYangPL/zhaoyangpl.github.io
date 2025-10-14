@@ -9,4 +9,8 @@ tags: [PDF]
 
 [第一章](/assets/file/概率论第一章.pdf)
 
-[第二章](/assets/file/概率论第二章（Uncomplete）.pdf)
+[第二章（部分）](/assets/file/概率论第二章（Uncomplete）.pdf)
+
+![1014笔记](/assets/img/Course/分布函数与连续性随机变量.jpg)
+
+![1014笔记](/assets/img/Course/分布函数与连续型随机变量.jpg)
