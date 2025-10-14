@@ -9,4 +9,4 @@ Recently, I've recieved bad news ina row. The first is, in summer vocation, I ap
 
 ***
 
-I updated [notes for Probability](/_posts/Notes/2025-10-11-Probability.md)
+I updated notes for Probability.
