@@ -2,7 +2,7 @@
 title: Dancing today, and make up for yesterday
 date: 2025-10-13 10:05:00 +0800
 categories: [Daily,Oct_25]
-tags: [Park,Dancing]
+tags: [Park,Dancing,Quant]
 ---
 
 I need to explain why no blog yesterday. Well... I drank too much and too late, thus woke up late also(12.). After finishing my lunch, I, with Gu YU, went to the HuPao Park. Shooting photos, watching architecture and so on.
