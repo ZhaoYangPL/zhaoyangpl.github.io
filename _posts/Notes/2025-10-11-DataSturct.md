@@ -411,7 +411,7 @@ typedef struct DuLNode{
 
 ***顺序表与链表的比较***
 
-![顺序表与链表比较]()
+![顺序表与链表比较](/assets/img/Course/线性表与顺序表比较.png)
 
 ## 线性表的应用
 
