@@ -36,16 +36,6 @@ decay（衰減）在WorldQuant BRAIN這類平台中，通常指時間序列上�
 
 ![](/assets/img/Course/newFieldResult.png)
 
-1. "现在rank 的到底是什么呢？" (What exactly is being ranked now?)
-You used the data field sci12_sentiment. This is likely a numerical score representing the news and social media sentiment for each stock. So, the expression rank(sci12_sentiment) does the following every single day of the simulation:
-
-It looks at all the stocks in your universe (e.g., TOP1000).
-
-It gets the sci12_sentiment score for each of those 1000 stocks on that specific day.
-
-It then ranks those 1000 sentiment scores from lowest to highest.
-
-Excellent questions! You've hit upon the most critical part of the entire alpha research process. It's completely normal to feel confused here, because the platform does a lot of complex work "behind the scenes." Let's pull back the curtain.
 
 1. "现在rank 的到底是什么呢？" (What exactly is being ranked now?)
 
@@ -116,3 +106,55 @@ Timing is Off (Lead/Lag Effects): The signal might be too early or too late. May
 The Signal is Too Noisy: Raw data fields like sentiment can be very volatile and "noisy." A signal that jumps around every day leads to high Turnover (as seen in your screenshot, 66% is quite high), and transaction costs eat all the potential profits. The standard solution is to smooth the signal using an operator like decay_linear(), which we discussed.
 
 The Signal Needs Neutralization: The sentiment signal might have a built-in bias. For example, maybe tech stocks always have higher sentiment scores than utility stocks. If tech stocks performed poorly in a given year, your alpha would also perform poorly. You might need to neutralize the signal against sectors or industries to remove these biases.
+
+### `rank(ts_decay_linear(-scl12_sentiment,5))` quite weird，poor performance In train set, but good in test set
+
+![](/assets/img/Course/WeirdTrain.png)
+
+![](/assets/img/Course/WeirdTest.png)
+
+#### The Core Reason: A Change in Market Regime 🏄
+Think of your alpha strategy as a specific type of surfboard. Your reversal strategy is like a specialized shortboard designed for fast, steep waves.
+
+The Train Set (2018-2022): Let's imagine the market during this period was like an ocean with small, choppy, or long, rolling waves. In this environment, your specialized shortboard (your reversal alpha) doesn't work well. This might have been a "momentum-driven" market where buying winners and selling losers was the dominant trend. Your reversal strategy would have consistently lost money, which is reflected in your poor training set results (Sharpe 0.46).
+
+The Test Set (e.g., 2023): Suddenly, the market conditions changed. The ocean started producing the perfect, steep waves your shortboard was designed for. This might have been a volatile, news-driven, or range-bound market where sentiment overreacted, and betting against the crowd (reversal) was highly profitable. Your alpha suddenly performed brilliantly (Sharpe 1.73).
+
+Looking at your data, the entire positive performance of your alpha comes almost exclusively from the year 2023 (Sharpe = 4.04), which was likely your test period. This is a massive clue.
+
+#### Why This is a Red Flag 🚩 (The Danger of False Confidence)
+While a high Sharpe ratio in the test set looks exciting, this situation is actually a major red flag.
+
+It's Not Robust: A good alpha strategy should be like an all-purpose longboard—it might not be the best on any single type of wave, but it performs reasonably well in most conditions. Your strategy is a "one-trick pony." It only works in a very specific type of market that might not appear again for years.
+
+It's Likely Luck: Your success in the test set is probably not because you found a genuinely brilliant, persistent signal. It's more likely that you got lucky—your test period just happened to be the perfect storm for your specific idea.
+
+Unreliable for the Future: You cannot trust this alpha to make money in the future. If the market regime shifts back to the 2018-2022 style, your strategy will start losing money again, just as it did in the training set.
+
+In quantitative finance, **consistency across different time periods and market conditions is far more important than a spectacular result in a single, short period**. Your training set, in this case, is actually giving you a more honest (and worrying) picture of the strategy's typical performance.
+
+### But how could i control the turnover, making it lower? Choosing another dataset or operator?
+
+![](/assets/img/Course/HighTurnover.png)
+
+#### 1. Smooth Your Signal with decay Operators (The Best Method) smoothing
+This is the most common and powerful technique. Think of decay operators like ts_decay_linear as a filter that smooths out the daily "noise" from your signal, revealing the underlying trend. It calculates a weighted average of your signal over a recent period (e.g., the last 10 days), which makes the final output change much more gradually.
+
+By making the signal smoother, the target positions don't jump around as much, which directly leads to lower turnover.
+
+How to Apply It:
+Wrap your entire existing expression in a decay operator. A window of 5 to 20 days is a good starting point.
+
+Try this expression:
+
+ts_decay_linear( ((-ts_rank(returns, 252)) * (vwap / close)), 10)
+ts_decay_linear(..., 10) tells the system to calculate a 10-day smoothed, weighted average of the signal inside the parentheses. This will dramatically reduce the day-to-day fluctuations and lower your turnover.
+
+#### 2. Use Slower-Moving Data Fields 🐢
+The root cause of your high turnover is the use of returns, which measures a 1-day change. A more stable approach is to base your alpha on data that doesn't change as quickly.
+
+Instead of returns, consider using:
+
+Longer-Term Momentum: Calculate returns over a longer period. The expression for a 20-day return is (close - delay(close, 20)) / delay(close, 20). This value is inherently more stable than a 1-day return.
+
+Fundamental Data: This is what the tutorial hinted at with the fn_liab_fair_val_1_a example. Fundamental data (like revenue, debt, assets) is reported quarterly or annually, making it a very low-turnover signal by nature.
