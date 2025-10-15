@@ -1,5 +1,5 @@
 ---
-title: "Quant Notes(CourseNotes for Study & Research Only)"
+title: "Quant Notes_COnfusions(CourseNotes for Study & Research Only)"
 subtitle: "Some Confusions"
 date: 2025-10-15 12:02:00 +0800
 categories: [Notes,Quant]  

@@ -281,3 +281,178 @@ if(!p || j>i)return ERROR; // i值不合法，不存在
 ```
 
 * 查找值为e的数据元素
+
+```c
+LNode *LocateELem(LinkList L，Elemtype e) { 
+//在带头结点单链表L中查找值为e的元素
+ //若找到返回指向该结点的指针，否则返回NULL
+ LNode*p=L->next; //初始化p指向首元结点
+while(p &&p->data!=e) //遍历单链表找值为e结点
+p=p->next; 
+return p; //p要么指向所找结点，要么为NULL
+}
+```
+
+5. 单链表的插入
+
+![](/assets/img/Course/单链表插入.png)
+
+```c
+Status ListInsert(LinkList &L,int i,ElemType e){ 
+p=L; j=0; 
+while( p && j < i-1) {
+ p=p->next;
+ ++j;
+ } //寻找第 i-1个结点,即要插入结点的前驱结点
+ if( !p || j > i-1)
+ return ERROR; // i>n + 1或者i<1, 不合法
+s=(LinkList)malloc(sizeof(LNode)); //生成新结点s 
+s->data=e; //将结点s的数据域置为e
+s->next=p->next; //将结点s插入L中
+ p->next=s; 
+return OK; 
+}//ListInsert
+```
+
+6. 单链表的删除(删除单链表L的第i个元素,并由e返回值)
+
+![](/assets/img/Course/单链表删除.png)
+
+```c
+Status ListDelete( LinkList &L,int i,ElemType &e) {
+p=L;j=0; 
+while( p->next && j<i-1 ){ //第i个结点前驱结点p
+ p=p->next; 
+ ++j; 
+} 
+if( !(p->next) || j>i-1 ) return ERROR; //删除位置不合理
+ q=p->next; //q指向待删除结点，以备释放
+ p->next=q->next; //改变删除结点前驱结点的指针域
+e=q->data; //可保存被删结点的值，并带回
+ free(q); //释放删除结点的空间
+ return OK; 
+}//ListDelete
+```
+
+7. 创建单链表
+
+InitList()是创建一个只有头结点的空链表。
+
+链表中各个元素（结点）是动态生成并插入到链表
+中。即从空表开设，逐个生成结点并插入。
+
+s=(LinkList)malloc(sizeof(LNode))的作用是生成
+一个结点，s指向该结点。反之，free(s)的作用是
+释放结点s的空间。
+
+可多次通过调用函数 ListInsert(LinkList &L, int i, 
+ElemType e) 实现，也可专门编写创建函数
+
+链表可根据需要有不同的生成方式，包括：
+ 头(前)插法、尾(后)插法、有序插入法，其中，最
+方便的是**头插法**。
+
+![头插法](/assets/img/Course/头插.png)
+
+```c
+void CreateList_L(LinkList &L,int n) { 
+ //逆序输入n个元素的值，头插法构建带头结点的单链表L
+L= (LinkList)malloc(sizeof(LNode)); 
+//L=new LNode;
+L->next=NULL; //先建立一个带头结点的单链表
+ for( i = n; i > 0; i--) { 
+p=(LinkList)malloc(sizeof(LNode)); //生成新结点
+ cin>>p->data;//scanf(&p->data); //输入值
+ p->next=L->next;
+ L->next=p; //插入到表头
+ } 
+}//CreateList_L
+```
+![尾插法](/assets/img/Course/尾插.png)
+
+```c++
+void CreateList_L(LinkList &L,int n){ 
+//正位序输入n个元素的值，建立带表头结点的单链表L 
+L=new LNode; // L= (LinkList)malloc(sizeof(LNode)); 
+L->next=NULL; 
+r=L; //尾指针r指向头结点
+ for(i=0;i<n;++i){ 
+p=new LNode; //生成新结点
+ cin>>p->data; //输入元素值
+ p->next=NULL; r->next=p; //插入到表尾
+ r=p; //r指向新的尾结点
+ } 
+}//CreateList_L
+```
+
+### 循环链表
+
+最大优势在于：**从表中任意一个结点出发都可找到表中其他结点**
+
+![循环链表](/assets/img/Course/循环.png)
+
+![循环合并](/assets/img/Course/循环合并.png)
+
+### 双向链表
+
+```c
+typedef struct DuLNode{
+ ElemType data;
+ struct DuLNode *prior;
+ struct DuLNode *next;
+};
+```
+
+![双向空表](/assets/img/Course/双向空表.png)
+
+![双向插入](/assets/img/Course/双向插入.png)
+
+![双向删除](/assets/img/Course/双向删除.png)
+
+***顺序表与链表的比较***
+
+![顺序表与链表比较]()
+
+## 线性表的应用
+
+* 一般线性表的合并
+
+```c
+Void MergeList( List &La , List Lb) {
+// 将所有在线性表Lb中但不在La中的数据元素插入到La中
+ La_len = ListLength( La );
+Lb_len = ListLength( Lb ); //求线性表的长度
+ for ( i = 1 ; i <= Lb_len ; i++) {
+GetElem( Lb , i , e ); // 取Lb中第i个数据元素赋给e 
+if ( !LocateElem( La , e )) ListInsert( La, ++La_len, e );
+// La中不存在与e相同的数据元素，插入e
+}
+} // Union O(La_len*Lb_len)
+```
+
+* 有序顺序表的合并
+
+```c
+void MergeList_Sq(SqList LA,SqList LB,SqList &LC){ 
+pa=LA.elem; pb=LB.elem; //指针pa和pb的初值分别指向两个表的第一个元素
+ LC.length=LA.length+LB.length; //新表长度为待合并两表的长度之和
+ LC.elem=new ElemType[LC.length]; //为合并后的新表分配一个数组空间
+ pc=LC.elem; //指针pc指向新表的第一个元素
+ pa_last=LA.elem+LA.length-1; //指针pa_last指向LA表的最后一个元素
+ pb_last=LB.elem+LB.length-1; //指针pb_last指向LB表的最后一个元素
+ while(pa<=pa_last && pb<=pb_last){ //两个表都非空
+ if(*pa<=*pb) *pc++=*pa++; //依次“摘取”两表中值较小的结点 
+else *pc++=*pb++; } 
+ while(pa<=pa_last) *pc++=*pa++; //LB表已到达表尾
+while(pb<=pb_last) *pc++=*pb++; //LA表已到达表尾
+}//MergeList_Sq
+```
+
+* 有序链表的合并
+
+```c
+if(pa->data<=pb->data) {
+pc->next=pa; pc=pa; pa=pa->next; }
+else {
+pc->next=pb; pc=pb; pb=pb->next;}
+```
