@@ -158,3 +158,36 @@ Instead of returns, consider using:
 Longer-Term Momentum: Calculate returns over a longer period. The expression for a 20-day return is (close - delay(close, 20)) / delay(close, 20). This value is inherently more stable than a 1-day return.
 
 Fundamental Data: This is what the tutorial hinted at with the fn_liab_fair_val_1_a example. Fundamental data (like revenue, debt, assets) is reported quarterly or annually, making it a very low-turnover signal by nature.
+
+### Characteristics of Momentum Effect. Momentum effect manifests differently depending on the time perspective:Short-term (less than 1 month): Reversion effect is stronger; Medium-term (quarter to year): Traditional momentum effect is most pronounced; Long-term (over 12 months): Effect tends to gradually weaken
+
+1. Short-Term Reversal (< 1 Month): The "Overreaction" Effect
+This is the "hot potato" phase. The tendency for stocks that performed very well in the past week or month to underperform in the next is one of the most robust findings in short-term finance.
+
+Why does it happen?
+
+* Behavioral Overreaction: This is the primary driver. Investors, both human and algorithmic, tend to overreact to dramatic news, earnings surprises, or large price moves. A stock might shoot up 20% on a good earnings report, far more than is justified by the new information. This creates a "mini-bubble" that quickly corrects as cooler heads prevail. The initial move is an overreaction, and the subsequent move is the market correcting that mistake.
+
+* Market Microstructure: On very short timescales (days to a week), effects like bid-ask bounce can create the illusion of reversal. More importantly, institutional liquidity providers often profit by "fading" these strong moves—they provide the liquidity to the panic buyers or sellers and then unwind their positions as the price reverts to a more stable level.
+
+Think of it like a stretched rubber band. The initial news stretches the band too far, and the short-term reversal is the band snapping back to its natural length.
+
+2. Medium-Term Momentum (3-12 Months): The "Underreaction" Effect
+This is the classic, Nobel Prize-worthy momentum effect. It's the "trend-following" phase.
+
+Why does it happen?
+
+* Behavioral Underreaction (Anchoring): This is the flip side of the short-term effect. While investors might overreact to the immediacy of news, they are often very slow to update their long-term beliefs about a company. If a company starts releasing a string of good news, investors who are "anchored" to its old, lower price will only adjust their valuation upwards gradually. This slow, creeping realization of the company's new, better reality creates a persistent upward trend.
+
+* Herding / Bandwagon Effect: As the trend becomes more established, other investors (including large funds) start to notice. They jump on the bandwagon, creating a self-reinforcing feedback loop. The initial good news creates a price trend, and the subsequent herding behavior sustains and extends that trend.
+
+* Disposition Effect: This is a key bias where investors are quick to sell their winners to "lock in" a profit but are very reluctant to sell their losers ("it might come back"). This behavior paradoxically fuels momentum. By selling winners too early, investors prevent the stock from reaching its fair value too quickly, thus prolonging the upward trend.
+
+3. Long-Term Reversal (> 12 Months): The "Valuation" Effect
+After a stock has been a "winner" for over a year, it often becomes a "loser" over the next 3-5 years. The trend finally breaks and reverses.
+
+Why does it happen?
+
+* Valuation Concerns: A stock that has been rising for 12-18 months is, by definition, much more expensive than it was. Its P/E ratio is likely stretched, and it may be priced for perfection. At this point, the herding has reached its peak, and smart money begins to ask, "Is this company really worth this much?" The stock becomes highly vulnerable to any slight disappointment.
+
+* Fundamentals Reassert Themselves: The forces of mean reversion finally take hold. Extremely high growth rates are difficult to sustain. Competitors enter the market, and market saturation occurs. Eventually, the company's growth slows, and its valuation must come back down to earth. Conversely, long-term losers often become so cheap that they become attractive acquisition targets or "value" plays, leading to their eventual recovery.
