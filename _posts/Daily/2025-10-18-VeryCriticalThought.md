@@ -14,3 +14,9 @@ By contrast, deeplearning maybe more attractive. Help...
 ***
 
 I really met some chanllenges, but never have I surrend, never! Maybe I will give up, but at least I will acheive the gold medal. And I am determined on that! 
+
+*** 
+
+**Precast**
+
+I decided to record my daily life and cut down usage of phone, I think this chanllenge will be very intersting. What's more, the action 5 pro can also be used as a well performed camare. Saving me from ugly photo shoot hhh.
