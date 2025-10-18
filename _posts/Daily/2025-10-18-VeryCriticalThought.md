@@ -20,3 +20,9 @@ I really met some chanllenges, but never have I surrend, never! Maybe I will giv
 **Precast**
 
 I decided to record my daily life and cut down usage of phone, I think this chanllenge will be very intersting. What's more, the action 5 pro can also be used as a well performed camare. Saving me from ugly photo shoot hhh.
+
+***
+
+So sad... JInhua was defeated by Wenzhou. Luo JUN is the king in my heart.
+
+***
