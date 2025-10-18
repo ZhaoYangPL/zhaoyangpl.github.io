@@ -10,3 +10,7 @@ These days I've spent lot of times in World Quant Brain,in here I learned a lot 
 Are these just some difficulties biginners will face?
 
 By contrast, deeplearning maybe more attractive. Help...
+
+***
+
+I really met some chanllenges, but never have I surrend, never! Maybe I will give up, but at least I will acheive the gold medal. And I am determined on that! 
