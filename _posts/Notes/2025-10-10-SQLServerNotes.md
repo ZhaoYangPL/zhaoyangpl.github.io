@@ -39,7 +39,7 @@ SELECT TOP 1 PERCENT id, name, enrollment_date FROM Students;
 ```
 
 **一定要记得where语句是放在group by 和 order by 前面的**
-![](/assets/img/Course/select语句.png)
+![](/assets/img/Course/SQL/select语句.png)
 
 **注意where子句中等于是=，不等是<>**
 
@@ -65,7 +65,7 @@ SELECT * FROM Students WHERE age IN (18, 20, 25);
 3. **模糊查找**
 
 百分号在哪边哪边就可以替换哪边
-![](/assets/img/Course/模糊查找.png)
+![](/assets/img/Course/SQL/模糊查找.png)
 
 4. 查找空值(不可以用‘**= NULL**’，要用‘**is NULL**’)
 
@@ -100,16 +100,16 @@ ORDER BY LEN(name) DESC;
 ```
 
 **聚集函数**
-![](/assets/img/Course/聚集函数.png)
+![](/assets/img/Course/SQL/聚集函数.png)
 
-![](/assets/img/Course/聚集函数规则.png)
+![](/assets/img/Course/SQL/聚集函数规则.png)
 
 **Group By**
-![](/assets/img/Course/group%20by规则.png)
+![](/assets/img/Course/SQL/group%20by规则.png)
 
 **Having**
-![](/assets/img/Course/Having.png)
+![](/assets/img/Course/SQL/Having.png)
 
-![](/assets/img/Course/Having子句规则.png)
+![](/assets/img/Course/SQL/Having子句规则.png)
 
 ***where语句不能使用聚集函数，Having语句必须使用聚集函数；select的列必须出现在Having语句或者group by语句中；先where在group by***

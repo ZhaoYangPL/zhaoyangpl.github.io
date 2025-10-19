@@ -13,15 +13,15 @@ tags: [Data Struct]
 
 * 例子：稀疏多项式
 
-![稀疏多项式](/assets/img/Course/稀疏多项式.png)
+![稀疏多项式](/assets/img/Course/DataStructure/稀疏多项式.png)
 
 ### 线性表的类型定义
 
-![类型定义](/assets/img/Course/线性表的类型定义.png)
+![类型定义](/assets/img/Course/DataStructure/线性表的类型定义.png)
 
 ### 线性表的顺序表示
 
-![](/assets/img/Course/线性表顺序表示.png)
+![](/assets/img/Course/DataStructure/线性表顺序表示.png)
 
 可以用动态数组表示：
 ```c
@@ -190,17 +190,17 @@ return OK;
 
 #### 单链表
 
-![](/assets/img/Course/单链表.png)
+![](/assets/img/Course/DataStructure/单链表.png)
 
 #### 头结点(H->next==NULL)
 
-![](/assets/img/Course/头结点.png)
+![](/assets/img/Course/DataStructure/头结点.png)
 
-![头结点的好处](/assets/img/Course/头结点的好处.png)
+![头结点的好处](/assets/img/Course/DataStructure/头结点的好处.png)
 
 #### 循环链表 & 双向链表
 
-![](/assets/img/Course/循环&双向.png)
+![](/assets/img/Course/DataStructure/循环&双向.png)
 
 ### 单链表的定义与表示
 
@@ -295,7 +295,7 @@ return p; //p要么指向所找结点，要么为NULL
 
 5. 单链表的插入
 
-![](/assets/img/Course/单链表插入.png)
+![](/assets/img/Course/DataStructure/单链表插入.png)
 
 ```c
 Status ListInsert(LinkList &L,int i,ElemType e){ 
@@ -316,7 +316,7 @@ return OK;
 
 6. 单链表的删除(删除单链表L的第i个元素,并由e返回值)
 
-![](/assets/img/Course/单链表删除.png)
+![](/assets/img/Course/DataStructure/单链表删除.png)
 
 ```c
 Status ListDelete( LinkList &L,int i,ElemType &e) {
@@ -352,7 +352,7 @@ ElemType e) 实现，也可专门编写创建函数
  头(前)插法、尾(后)插法、有序插入法，其中，最
 方便的是**头插法**。
 
-![头插法](/assets/img/Course/头插.png)
+![头插法](/assets/img/Course/DataStructure/头插.png)
 
 ```c
 void CreateList_L(LinkList &L,int n) { 
@@ -368,7 +368,7 @@ p=(LinkList)malloc(sizeof(LNode)); //生成新结点
  } 
 }//CreateList_L
 ```
-![尾插法](/assets/img/Course/尾插.png)
+![尾插法](/assets/img/Course/DataStructure/尾插.png)
 
 ```c++
 void CreateList_L(LinkList &L,int n){ 
@@ -389,9 +389,9 @@ p=new LNode; //生成新结点
 
 最大优势在于：**从表中任意一个结点出发都可找到表中其他结点**
 
-![循环链表](/assets/img/Course/循环.png)
+![循环链表](/assets/img/Course/DataStructure/循环.png)
 
-![循环合并](/assets/img/Course/循环合并.png)
+![循环合并](/assets/img/Course/DataStructure/循环合并.png)
 
 ### 双向链表
 
@@ -403,15 +403,15 @@ typedef struct DuLNode{
 };
 ```
 
-![双向空表](/assets/img/Course/双向空表.png)
+![双向空表](/assets/img/Course/DataStructure/双向空表.png)
 
-![双向插入](/assets/img/Course/双向插入.png)
+![双向插入](/assets/img/Course/DataStructure/双向插入.png)
 
-![双向删除](/assets/img/Course/双向删除.png)
+![双向删除](/assets/img/Course/DataStructure/双向删除.png)
 
 ***顺序表与链表的比较***
 
-![顺序表与链表比较](/assets/img/Course/线性表与顺序表比较.png)
+![顺序表与链表比较](/assets/img/Course/DataStructure/线性表与顺序表比较.png)
 
 ## 线性表的应用
 

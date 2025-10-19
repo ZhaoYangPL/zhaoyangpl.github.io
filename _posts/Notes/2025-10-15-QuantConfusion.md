@@ -30,11 +30,11 @@ decay（衰減）在WorldQuant BRAIN這類平台中，通常指時間序列上�
 
 ### 现在我找了另外的data field，那么现在rank 的到底是什么呢？而且为什么一个简单的rank（）也算作一个Alpha，它不过是把是股票排序，后面的数据是怎么算出来的（具体的机理是怎样的）？然后为什么我尝试新的data field以后结果这么差?
 
-![](/assets/img/Course/newFieldCode.png)
+![](/assets/img/Course/SQL/newFieldCode.png)
 
-![](/assets/img/Course/settings.png)
+![](/assets/img/Course/Quant/settings.png)
 
-![](/assets/img/Course/newFieldResult.png)
+![](/assets/img/Course/SQL/newFieldResult.png)
 
 
 1. "现在rank 的到底是什么呢？" (What exactly is being ranked now?)
@@ -109,9 +109,9 @@ The Signal Needs Neutralization: The sentiment signal might have a built-in bias
 
 ### `rank(ts_decay_linear(-scl12_sentiment,5))` quite weird，poor performance In train set, but good in test set
 
-![](/assets/img/Course/WeirdTrain.png)
+![](/assets/img/Course/Quant/WeirdTrain.png)
 
-![](/assets/img/Course/WeirdTest.png)
+![](/assets/img/Course/Quant/WeirdTest.png)
 
 #### The Core Reason: A Change in Market Regime 🏄
 Think of your alpha strategy as a specific type of surfboard. Your reversal strategy is like a specialized shortboard designed for fast, steep waves.
@@ -135,7 +135,7 @@ In quantitative finance, **consistency across different time periods and market 
 
 ### But how could i control the turnover, making it lower? Choosing another dataset or operator?
 
-![](/assets/img/Course/HighTurnover.png)
+![](/assets/img/Course/Quant/HighTurnover.png)
 
 #### 1. Smooth Your Signal with decay Operators (The Best Method) smoothing
 This is the most common and powerful technique. Think of decay operators like ts_decay_linear as a filter that smooths out the daily "noise" from your signal, revealing the underlying trend. It calculates a weighted average of your signal over a recent period (e.g., the last 10 days), which makes the final output change much more gradually.
