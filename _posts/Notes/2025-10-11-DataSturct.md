@@ -456,3 +456,226 @@ pc->next=pa; pc=pa; pa=pa->next; }
 else {
 pc->next=pb; pc=pb; pb=pb->next;}
 ```
+
+![](/assets/img/Course/DataStructure/多项式相加.png)
+
+***
+
+# 栈和队列
+
+## 栈的定义和特点
+
+![](/assets/img/Course/DataStructure/栈的定义.png)
+
+![](/assets/img/Course/DataStructure/栈的运算规则.png)
+
+## 栈与一般线性表的区别
+
+## 队列的定义和特点
+
+![](/assets/img/Course/DataStructure/队列的定义.png)
+
+![](/assets/img/Course/DataStructure/队列的运算规则.png)
+
+## 栈的表示和实现
+
+### 顺序栈的表示与实现
+
+用一组地址连续的存储单元（动态申请，用指针
+base指向起始地址）依次存放自栈底到栈顶的数据
+元素，同时设立指针top指向栈顶元素在顺序栈中的
+位置。
+
+```C
+typedef struct {
+SElemType *base; //栈底指针，数组名
+SElemType *top; //栈顶指针，或 int top;
+int stacksize; //栈的最大容量
+}SqStack;
+```
+
+* 顺序栈初始化
+
+```c
+Status InitStack( SqStack &S )
+{
+S.base =(SElemType*)malloc
+(MAXSIZE*sizeof(SElemType)); //申请空间
+if( !S.base ) exit(OVERFLOW);
+S.top = S.base; //S.top=0;
+S.stackSize = MAXSIZE;
+return OK;
+}
+```
+* 判断顺序栈是否为空
+
+```c
+Status StackEmpty( SqStack S )
+{
+if(S.top == S.base) 
+return true;
+else
+return false;
+}
+```
+
+*   求顺序栈的长度
+
+```c
+int StackLength( SqStack S )
+{
+return S.top – S.base;
+}
+
+if(S.top-S.base==S.stacksize) #则栈满
+```
+
+* 清空顺序栈
+
+```c
+Status ClearStack( SqStack S )
+{ //将栈s置为空栈
+S.top = S.base;
+return OK;
+}
+```
+
+* 销毁顺序栈
+
+```c
+Status DestroyStack( SqStack &S )
+{
+if( S.base )
+{
+free(S.base) ;
+S.stacksize = 0;
+S.base = S.top = NULL;
+}
+return OK;
+}
+```
+* **进栈**
+
+```c
+Status Push( SqStack &S, SElemType e) 
+{
+if( S.top - S.base== S.stacksize ) // 栈满
+ return ERROR;
+*S.top++=e;
+return OK;
+}
+
+```
+
+* **出栈**
+
+```c
+Status Pop( SqStack &S, SElemType &e) 
+{
+if( S.top == S.base ) // 栈空
+ return ERROR; 
+e＝ *--S.top;
+return OK;
+}
+```
+
+* **取栈顶元素**
+
+```c
+Status GetTop( SqStack S, SElemType &e) 
+{
+if( S.top == S.base ) return ERROR; // 栈空
+e = *( S.top – 1 ); //元素不出栈，故top不变
+return OK;
+}
+```
+
+### 链栈的表示和实现
+
+![](/assets/img/Course/DataStructure/链栈表示图.png)
+
+```c
+typedef struct StackNode {
+SElemType data;
+struct StackNode *next;
+} StackNode, *LinkStack;
+LinkStack S;
+```
+
+* **链栈进栈**
+
+```c
+Status Push(LinkStack &S , SElemType e)
+{
+p=new StackNode; //生成新结点p
+if (!p) return OVERFLOW;
+p->data=e; 
+ p->next=S; 
+ S=p;
+return OK; 
+}
+```
+
+* **链栈出栈**
+
+```c
+Status Pop (LinkStack &S,SElemType &e)
+{
+ if (S==NULL) return ERROR;
+e = S-> data; //栈顶元素值有e带回
+ p = S; 
+ S = S-> next;
+free(p); //删除栈顶结点
+ return OK; 
+}
+```
+
+### 几个应用例子
+
+* 进制转换
+
+```c
+void conversion ( ) {
+InitStack (S) ; //构造一个空栈S
+scanf ( “%d” , N);
+while (N) {
+Push ( S , N % 8 ); // 取余 入栈
+ N = N / 8; // 整除
+ }
+While ( ! StackEmpty (S) ) {
+Pop ( S , e ); // 出栈
+ printf ( “%d” , e );
+}
+}
+```
+
+* 括号匹配的检验
+
+```c
+Status Matching() {
+ //检验表达式中括号是否正确匹配，匹配返回true，否则false。表达式以“#”结束
+ int flag=1; //标记查找结果以控制循环及返回结果
+ InitStack(S); char c; cin>>c;
+ while(c!='#' && flag) {
+ switch (c) {
+ case '[': case '(': //若是左括号，则将其压入栈
+ Push(S,c); break;
+ case ')' : //若是右括号“)”，则根据当前栈顶元素的值分情况考
+if (!StackEmpty(S) && gettop(S)=='(' ) //若栈非空且栈顶元素是“(”
+Pop(S,x);
+else flag=0; //若栈空或栈顶元素不是“(”，则非法
+break;
+ case ']' : //若是右括号“]”，则根据当前栈顶元素的值分情况考虑
+if (!StackEmpty(S) && GetTop(S)=='[' )//若栈顶元素是“[”，则成功
+Pop(S,x);
+else flag=0; //若栈空或栈顶元素不是“[”，则非法
+break;
+ }//switch
+ cin>>c; //继续读入下一个字符
+ }//while
+ if (StackEmpty(S) &&flag ) return true;
+ else return false;
+} //Matching
+```
+
+![](/assets/img/Course/DataStructure/括号匹配检验.png)
