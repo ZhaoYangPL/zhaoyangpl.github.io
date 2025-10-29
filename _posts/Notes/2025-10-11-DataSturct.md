@@ -679,3 +679,212 @@ break;
 ```
 
 ![](/assets/img/Course/DataStructure/括号匹配检验.png)
+
+* 表达式求值
+
+![](/assets/img/Course/DataStructure/表达式求值算法思想.png)
+
+```C
+OperandType EvaluateExpression( ) {
+InitStack (OPTR); Push(OPTR,’#’);
+InitStack (OPND); ch = getchar( );
+while (ch!= '#' || GetTop(OPTR)! = '#') {
+if (! In(ch,OP)){ // ch不是运算符则进栈
+ Push(OPND,ch); ch = getchar(); } 
+else
+switch (Precede(GetTop(OPTR),ch)) { //比较优先权
+ case '<' : //当前字符ch压入OPTR栈，读入下一字符ch
+Push(OPTR, ch); ch = getchar(); break;
+case ‘>’ : //弹出OPTR的运算符并运算，并将结果入栈
+ Pop(OPTR, theta);
+Pop(OPND, b); Pop(OPND, a);
+Push(OPND, Operate(a, theta, b)); break;
+case '=' : //脱括号并接收下一字符
+ Pop(OPTR,x); ch = getchar();
+break;
+} // switch
+} // while
+return GetTop(OPND);
+} // EvaluateExpression
+```
+
+![](/assets/img/Course/DataStructure/算符间的优先关系.png)
+
+![](/assets/img/Course/DataStructure/计算表达式例子.png)
+
+## 队列的表示和实现--顺序队列
+
+![](/assets/img/Course/DataStructure/队列的抽象数据类型.png)
+
+![](/assets/img/Course/DataStructure/循环队列.png)
+
+![](/assets/img/Course/DataStructure/循环队列的实现.png)
+
+![](/assets/img/Course/DataStructure/遇到的问题.png)
+
+![](/assets/img/Course/DataStructure/强制空一位.png)
+
+* **循环队列初始化**
+
+```c
+Status InitQueue (SqQueue &Q){
+Q.base =(QElemType*)malloc
+(MAXQSIZE*sizeof(QElemType));
+if(!Q.base) exit(OVERFLOW);
+Q.front=Q.rear=0;
+return OK;
+}
+```
+
+* **求队列长度**
+
+```c
+int QueueLength (SqQueue Q){
+return (Q.rear-Q.front+MAXQSIZE)%MAXQSIZE;
+}
+```
+
+* **元素入队**
+
+```c
+Status EnQueue(SqQueue &Q,QElemType e){
+if((Q.rear+1)%MAXQSIZE==Q.front) //队列满
+ return ERROR;
+Q.base[Q.rear]=e; //新元素插入队尾
+Q.rear=(Q.rear+1)%MAXQSIZE; //修改队尾指针
+return OK;
+}
+```
+
+* **元素出队**
+
+```c
+Status DeQueue (SqQueue &Q,QElemType &e){
+if( Q.front == Q.rear ) //队列为空
+ return ERROR;
+e=Q.base[Q.front]; //取出队首元素
+Q.front=(Q.front+1)%MAXQSIZE; //修改队头指针
+return OK;
+}
+```
+
+* **取队头元素，不出队**
+
+```C
+Status GetHead (SqQueue Q,QElemType &e){
+if( Q.front == Q.rear ) //队列为空
+ return ERROR;
+e=Q.base[Q.front]; //取出队首元素
+return OK;
+}
+```
+
+![](/assets/img/Course/DataStructure/顺序循环队列注意点.png)
+
+## 队列的表示和实现--链队列
+
+![](/assets/img/Course/DataStructure/链队列行为.png)
+
+* **链队列初始化**
+
+```c
+Status InitQueue (LinkQueue &Q){
+Q.front=Q.rear=new QNode; //生成头结点
+if(!Q.front) exit(OVERFLOW);
+Q.front->next=NULL; //头结点指针域置空
+return OK;
+}
+```
+
+* **判断链队列是否为空**
+
+```c
+Status QueueEmpty (LinkQueue Q){
+return (Q.front==Q.rear); 
+}
+```
+
+* **求链队列的队头元素**
+
+```c
+Status GetHead (LinkQueue Q, QElemType &e){
+//由引用参数e带回
+ if(Q.front==Q.rear) return ERROR;
+e=Q.front->next->data;
+return OK;
+}
+求链队列的队头元素
+QElemType GetHead (LinkQueue Q){
+//直接返回，另一方式
+ if(Q.front==Q.rear) exit(0);
+return Q.front->next->data;
+}
+```
+
+* **入队**
+
+```c
+Status EnQueue(LinkQueue &Q,QElemType e){
+p=(QueuePtr)malloc(sizeof(QNode));
+if(!p) exit(OVERFLOW);
+p->data=e; 
+ p->next=NULL;
+Q.rear->next=p;
+Q.rear=p;
+return OK;
+}
+```
+
+* **出队**
+
+```c
+Status DeQueue (LinkQueue &Q,QElemType &e){
+//删除队头元素，用e返回其值
+ if(Q.front==Q.rear) return ERROR;
+p=Q.front->next;
+e=p->data;
+Q.front->next=p->next;
+if(Q.rear==p) Q.rear=Q.front; //当队列只有一个元素时
+free(p);
+return OK;
+}
+```
+
+### 几个例子
+
+* 共享栈
+
+![](/assets/img/Course/DataStructure/共享栈.png)
+
+```c
+Status Init_Stack(DblStack &s,int m)
+{
+s.V=(SElemType*)malloc(m*sizeof(SElemType));
+s.bot[0]=-1;
+s.bot[1]=m;
+s.top[0]=-1;
+s.top[1]=m;
+return OK;
+}
+
+int IsEmpty(DblStack s,int i)
+{ return s.top[i] == s.bot[i]; }
+//判栈满否, 满返回1, 否则返回0
+int IsFull(DblStack s)
+{
+if(s.top[0]+1==s.top[1]) 
+return 1;
+else 
+return 0;
+}
+
+void Dblpush(DblStack &s,SElemType x,int i)
+{ 
+if( IsFull (s ) ) exit(1);
+// 栈满则停止执行
+ if ( i == 0 ) s.V[ ++s.top[0] ] = x; 
+//栈0情形：栈顶指针先加1, 然后按此地址进栈
+ else s.V[--s.top[1]]=x;
+//栈1情形：栈顶指针先减1, 然后按此地址进栈
+}
+```
