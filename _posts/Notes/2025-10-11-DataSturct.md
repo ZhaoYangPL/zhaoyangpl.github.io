@@ -888,3 +888,47 @@ if( IsFull (s ) ) exit(1);
 //栈1情形：栈顶指针先减1, 然后按此地址进栈
 }
 ```
+
+# 树和二叉树
+
+## 树和二叉树的定义
+
+### 树的定义
+
+* 只有根节点没有前驱，除此以外每个节点只有一个前驱。所有节点可以有0至多个后继
+
+### 树的基本术语
+
+![](/assets/img/Course/DataStructure/树的基本术语.png)
+
+![](/assets/img/Course/DataStructure/树的基本术语1.png)
+
+### 二叉树的定义
+
+![](/assets/img/Course/DataStructure/二叉树的定义.png)
+
+## 二叉树的性质与存储结构
+
+### 二叉树的性质
+
+* 第i层上最多有2^{i-1}个节点
+
+* 深度为k的二叉树最多有2^k-1个节点
+
+![](/assets/img/Course/DataStructure/二叉树的性质.png)
+
+![](/assets/img/Course/DataStructure/二叉树性质4.png)
+
+![](/assets/img/Course/DataStructure/二叉树性质5.png)
+
+![](/assets/img/Course/DataStructure/二叉树顺序存储.png)
+
+### 二叉链表
+
+![](/assets/img/Course/DataStructure/二叉链表.png)
+
+![](/assets/img/Course/DataStructure/三叉链表.png)
+
+## 遍历二叉树和线索二叉树
+
+![](/assets/img/Course/DataStructure/二叉树的遍历.png)
