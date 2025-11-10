@@ -606,6 +606,8 @@ return OK;
 
 ### 链栈的表示和实现
 
+**由于栈是先进后出的，因此链栈使用的是头插法，否则的话每次都要遍历链表**
+
 ![](/assets/img/Course/DataStructure/链栈表示图.png)
 
 ```c

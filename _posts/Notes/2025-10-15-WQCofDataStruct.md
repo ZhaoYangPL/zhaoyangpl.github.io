@@ -84,3 +84,6 @@ D. 单链表：基于指针的链式存储结构。
 
 ![](/assets/img/Course/DataStructure/首尾指针循环列表删除元素判断删除的是否是尾指针.png)
 
+![](/assets/img/Course/DataStructure/判断顺序栈为空.png)
+
+![](/assets/img/Course/DataStructure/循环队列指的就是顺序存储.png)
