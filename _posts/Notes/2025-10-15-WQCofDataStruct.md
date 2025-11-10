@@ -1,5 +1,5 @@
 ---
-title: "Celection of Wrong Questions of Data Struct(CourseNotes for Study & Research Only)"
+title: "Selection of Wrong Questions of Data Struct(CourseNotes for Study & Research Only)"
 date: 2025-10-15 20:35:00 +0800
 categories: [Notes,Data Struct]  
 tags: [Data Struct,CWQ]
@@ -47,3 +47,40 @@ T
 F
 
 * 循环队列指的就是循环数组，通过去余数来实现循环。与链表无关
+
+![](/assets/img/Course/DataStructure/数据结构的逻辑结构与存储结构.png)
+
+![](/assets/img/Course/DataStructure/线性表属于逻辑结构.png)
+
+解题思路：
+逻辑结构描述数据元素之间的逻辑关系（如线性关系、树形关系等），而不关心数据在计算机中的具体存储方式。有序表是一种逻辑结构，因为它定义了元素之间按特定顺序（如升序或降序）排列的关系，例如有序线性表。
+
+其他选项属于存储结构（或物理结构），即数据在计算机内存中的实现方式：
+
+A. 顺序表：基于数组的顺序存储结构。
+
+B. 散列表：基于哈希函数的存储结构。
+
+D. 单链表：基于指针的链式存储结构。
+
+![](/assets/img/Course/DataStructure/时间复杂度.png)
+
+不要把N*3看成N**3
+
+![](/assets/img/Course/DataStructure/具体数据给定的特殊情况.png)
+
+详细解释如下：
+时间复杂度衡量的是**算法执行时间随数据规模增长的变化趋势**。它的核心是看循环等操作次数是否随某个变量的变化而变化。
+
+在这段代码中，循环的终止条件是 i != n，而 n在程序一开始就被明确赋值为一个常数 100。
+
+因此，无论这个程序运行多少次，循环都会从 i=1开始，每次增加1，直到 i等于 100时结束。
+
+循环体固定执行了 99 次。这是一个确定的、固定的次数。
+
+由于执行次数是一个常数，不随任何输入规模的改变而改变，所以它的时间复杂度是 O(1)，也就是常数时间复杂度。
+
+![](/assets/img/Course/DataStructure/链表不具有的特点.png)
+
+![](/assets/img/Course/DataStructure/首尾指针循环列表删除元素判断删除的是否是尾指针.png)
+

@@ -14,3 +14,4 @@ tags: [PDF]
 ![1014笔记](/assets/img/Course/Probability/分布函数与连续性随机变量.jpg)
 
 ![1014笔记](/assets/img/Course/Probability/分布函数与连续型随机变量.jpg)
+
