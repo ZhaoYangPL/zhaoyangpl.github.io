@@ -50,7 +50,7 @@ F
 
 ![](/assets/img/Course/DataStructure/数据结构的逻辑结构与存储结构.png)
 
-![](/assets/img/Course/DataStructure/线性表属于逻辑结构.png)
+![](/assets/img/Course/DataStructure/顺序表属于逻辑结构.png)
 
 解题思路：
 逻辑结构描述数据元素之间的逻辑关系（如线性关系、树形关系等），而不关心数据在计算机中的具体存储方式。有序表是一种逻辑结构，因为它定义了元素之间按特定顺序（如升序或降序）排列的关系，例如有序线性表。
