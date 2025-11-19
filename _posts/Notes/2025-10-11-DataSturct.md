@@ -948,3 +948,150 @@ if( IsFull (s ) ) exit(1);
 ## 遍历二叉树和线索二叉树
 
 ![](/assets/img/Course/DataStructure/二叉树的遍历.png)
+
+### 二叉树的遍历
+
+1. 先序
+```c
+void PreOrder( BiTree T)
+{
+ if (T!=NULL)
+ {
+ cout<<T->data<<‘ ‘; //访问根结点
+ PreOrder(T->lchild) ; //先序遍历左子树
+ PreOrder(T->rchild) ; //先序遍历左子树
+ }
+ }
+```
+
+2. 中序
+```c
+void InOrder( BiTree T)
+{
+ if (T!=NULL)
+ {
+ InOrder(T->lchild) ; //中序遍历左子树
+ cout<<T->data<<‘ ‘; //访问根结点
+ InOrder(T->rchild) ; //中序遍历左子树
+ }
+}
+```
+
+3. 后序
+```c
+void PostOrder( BiTree T)
+{
+ if (T!=NULL)
+ {
+ PostOrder(T->lchild) ; //后序遍历左子树
+ PostOrder(T->rchild) ; //后序遍历左子树
+ cout<<T->data<<‘ ‘; //访问根结点
+ }
+}
+```
+
+4. 层序
+
+### 二叉树的建立
+```c
+Status CreateBiTree(BiTree &T )
+ // 按先序次序输入二叉树中结点的值（一个字符），
+ // 特殊字符 # 表示空树，输入abc##de#g##f###
+{ 
+ char ch; 
+ ch=getchar();
+ if (ch=='#') T=NULL; 
+ else { 
+T= (BiTNode *)malloc(sizeof(BiTNode)); //生成根结点
+ T->data=ch; 
+ CreateBiTree(T->lchild); //构造左子树，递归
+ CreateBiTree(T->rchild); //构造右子树，递归
+ }
+ return OK;
+}
+```
+
+### 二叉树的复制
+
+【算法步骤】
+如果是空树，递归结束，否则执行以下操作：
+1. 申请一个新结点空间，复制根结点；
+2. 递归复制左子树
+3. 递归复制右子树
+```c
+void Copy(BiTree T,BiTree &NewT) {
+if (T==NULL)
+NewT = NULL;
+else {
+NewT = new BiTNode;
+NewT->data = T->data;
+Copy(T->lchild, NewT->lchild);
+Copy(T->rchild, NewT->rchild);
+}
+}
+```
+
+### 二叉树的深度
+【算法步骤】
+如果是空树，递归结束，深度为0，否则执行以下操作：
+1. 递归计算左子树的深度记为m；
+2. 递归计算右子树的深度记为n；
+3. 如果m大于n，二叉树的深度为m+1，否则为n+1。
+```c
+int Depth(BiTree T) {
+ int m,n;
+if (!T) return 0;
+else {
+ m = Depth(T->lchild);
+n = Depth(T->rchild);
+return m>n? m+1 : n+1;
+}
+}
+```
+
+### 统计节点个数
+
+```c
+int NodeCount(BiTree T)
+{
+if (T==NULL) return 0;
+else
+return NodeCount(T->lchild) +
+NodeCount(T->rchild) + 1;
+}
+```
+
+## 线索二叉树
+
+![](/assets/img/Course/DataStructure/线索二叉树的概念.png)
+
+![](/assets/img/Course/DataStructure/中序线索树.png)
+
+![](/assets/img/Course/DataStructure/后序线索树.png)
+
+## 树和森林的转换
+
+![](/assets/img/Course/DataStructure/孩子兄弟表示法.png)
+
+![](/assets/img/Course/DataStructure/二叉树与森林互换.png)
+
+## 树和森林的遍历
+
+![](/assets/img/Course/DataStructure/树的遍历.png)
+
+![](/assets/img/Course/DataStructure/森林的遍历.png)
+
+# 哈夫曼树
+
+![](/assets/img/Course/DataStructure/哈夫曼树概念1.png)
+
+![](/assets/img/Course/DataStructure/哈夫曼树概念2.png)
+
+![](/assets/img/Course/DataStructure/构造哈夫曼树1.png)
+
+![](/assets/img/Course/DataStructure/构造哈夫曼树2.png)
+
+![](/assets/img/Course/DataStructure/前缀编码.png)
+
+![](/assets/img/Course/DataStructure/前缀编码例子.png)
+
