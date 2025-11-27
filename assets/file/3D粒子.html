@@ -15,13 +15,72 @@
             right: 20px;
             width: 300px;
             padding: 25px;
-            background: rgba(20, 20, 35, 0.7); /* 更深色的背景 */
+            background: rgba(20, 20, 35, 0.7);
             backdrop-filter: blur(15px);
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: #e0e0ff;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-            transition: all 0.3s ease;
+            /* 新增过渡效果，让显示/隐藏更丝滑 */
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            transform-origin: top right;
+            z-index: 1000; /* 保证在最上层 */
+        }
+        /* --- 新增：隐藏状态的样式 (添加 .collapsed 类时生效) --- */
+        #ui-container.collapsed {
+            transform: scale(0.9) translateY(-20px); /* 稍微缩小并上移 */
+            opacity: 0;
+            pointer-events: none; /* 隐藏时不可点击 */
+        }
+
+        /* --- 新增：悬浮按钮样式 --- */
+        #ui-toggle-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1001; /* 比面板更高，保证永远能点到 */
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            padding: 0; /* 覆盖原来的 padding */
+        }
+
+        #ui-toggle-btn:hover {
+            background: rgba(0, 210, 255, 0.4);
+            transform: rotate(90deg);
+        }
+
+        /* --- 新增：移动端专属优化 (解决你截图中的问题) --- */
+        @media (max-width: 600px) {
+            /* 手机上按钮放左上角或者右上角，这里放右上角 */
+            #ui-toggle-btn {
+                top: 15px;
+                right: 15px;
+            }
+
+            /* 手机上菜单的位置调整 */
+            #ui-container {
+                width: auto; /* 宽度自动适应 */
+                left: 20px;  /* 左右留边距 */
+                right: 20px;
+                top: 70px;   /* 往下挪，给按钮留出空间 */
+                padding: 20px; /* 内边距稍微减小 */
+            }
+            
+            /* 手机上的隐藏动画：改为向右滑动消失，体验更好 */
+            #ui-container.collapsed {
+                transform: translateX(120%);
+            }
         }
 
         h2 { margin: 0 0 20px 0; font-size: 20px; font-weight: 600; letter-spacing: 1px; color: #fff; text-align: center;}
@@ -88,7 +147,7 @@
         <div id="hand-tracking-overlay">AI 手势追踪中</div>
         <video id="video-preview" playsinline></video>
     </div>
-
+    <button id="ui-toggle-btn" onclick="toggleUI()">⚙️ 设置</button>
     <div id="ui-container">
         <h2>星际交互系统</h2>
         
@@ -477,6 +536,30 @@
         // 启动
         calculateShape('heart'); // 默认初始形状
         animate();
+
+                // --- UI 显隐控制逻辑 ---
+        function toggleUI() {
+            const ui = document.getElementById('ui-container');
+            const btn = document.getElementById('ui-toggle-btn');
+            
+            // 切换 class
+            ui.classList.toggle('collapsed');
+            
+            // 根据状态修改按钮图标（可选）
+            const isClosed = ui.classList.contains('collapsed');
+            if (isClosed) {
+                btn.innerHTML = "⚙️"; // 菜单关闭时显示齿轮
+                btn.style.background = "rgba(255, 255, 255, 0.1)";
+            } else {
+                btn.innerHTML = "❌"; // 菜单打开时显示关闭
+                btn.style.background = "rgba(255, 50, 50, 0.4)"; // 给个红色背景提示关闭
+            }
+        }
+
+        // 建议：在移动端默认自动收起菜单，给用户沉浸感
+        if (window.innerWidth < 600) {
+            toggleUI();
+        }
 
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
