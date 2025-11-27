@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据结构题目分享：求二叉树高度</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <style>
+        body { font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: #f3f4f6; }
+        .card { background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 20px; margin-bottom: 20px; }
+        .code-block { font-family: "Consolas", monospace; font-size: 0.9em; }
+        .diagram-node { width: 40px; height: 40px; border-radius: 50%; background: #3b82f6; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; position: relative; z-index: 10; }
+        .diagram-line { position: absolute; background: #9ca3af; z-index: 1; }
+        .arrow-up { color: #ef4444; font-weight: bold; font-size: 12px; }
+    </style>
+</head>
+<body class="p-6">
+
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">题目分享：求二叉树高度 (6-2)</h1>
+        <p class="text-gray-600 mb-6">分享人：Weekend</p>
+
+        <!-- 第一部分：裁判程序分析 -->
+        <div class="card">
+            <h2 class="text-xl font-bold text-indigo-600 mb-4">1. 先看题目给了什么？(裁判程序)</h2>
+            <p class="mb-4">拿到这道题，我先看了一下裁判程序帮我们做了哪些“杂活”，这样我们就不需要重复造轮子了。</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <h3 class="font-bold text-gray-700">裁判程序提供了：</h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2 mt-2">
+                        <li><strong>结构定义：</strong> <code>BinTree</code> 指针和 <code>struct TNode</code> 已经写好了。</li>
+                        <li><strong>数据准备：</strong> 建树、读入数据的过程不用我们管。</li>
+                        <li><strong>我们的任务：</strong> 只需要填好 <code>GetHeight(BinTree BT)</code> 这个函数，给出一个整数（高度）就行。</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-50 p-3 rounded border">
+                    <pre><code class="language-c">// 题目已定义好，直接用：
+typedef struct TNode *Position;
+typedef Position BinTree;
+struct TNode{
+    ElementType Data;
+    BinTree Left;  // 左孩子
+    BinTree Right; // 右孩子
+};
+</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第二部分：核心逻辑 -->
+        <div class="card">
+            <h2 class="text-xl font-bold text-indigo-600 mb-4">2. 我的思路：递归法 (分治)</h2>
+            <p class="mb-4">最开始我是这么想的：如果我想知道一棵树有多高，其实我不需要自己跑遍所有节点。</p>
+            
+            <div class="space-y-4">
+                <div class="flex items-start">
+                    <div class="bg-blue-100 p-2 rounded mr-3">💡</div>
+                    <div>
+                        <h3 class="font-bold">形象的理解</h3>
+                        <p class="text-gray-700">
+                            这就好比我是<strong>CEO</strong>，我想知道公司有几级管理层。我不需要亲自去数。<br>
+                            1. 我问左边的经理：“你手下有多少层？”<br>
+                            2. 我问右边的经理：“你手下有多少层？”<br>
+                            3. 他们俩谁高，我就按谁的算，最后<strong>加上我自己这一层 (+1)</strong>。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                    <h3 class="font-bold text-yellow-800">这是我一开始写的代码</h3>
+                    <pre><code class="language-c">int GetHeight(BinTree BT) {
+    if (BT == NULL) return 0; // 如果是空位（空树），就是0层
+    else {
+        // 比较左右谁更高
+        if (GetHeight(BT->Left) > GetHeight(BT->Right)) 
+            return GetHeight(BT->Left) + 1; // 选左边 + 1
+        else 
+            return GetHeight(BT->Right) + 1; // 选右边 + 1
+    }
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第三部分：图解演示 -->
+        <div class="card">
+            <h2 class="text-xl font-bold text-indigo-600 mb-4">3. 递归过程演示</h2>
+            <p class="mb-4">大家可以看下这个图，数据是怎么一层层“汇报”上来的。</p>
+            
+            <div class="relative h-64 bg-gray-50 border rounded-lg overflow-hidden flex justify-center pt-8">
+                <!-- 树结构 -->
+                <!-- Root A -->
+                <div class="absolute top-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+                    <div class="diagram-node bg-indigo-600">A</div>
+                    <div class="text-xs text-gray-500 mt-1">等: max(左,右)+1</div>
+                    <div class="text-sm font-bold text-green-600 mt-1 hidden" id="res-A">Return 4</div>
+                </div>
+
+                <!-- Left B -->
+                <div class="absolute top-24 left-1/3 transform -translate-x-1/2 flex flex-col items-center">
+                    <div class="diagram-line w-24 h-0.5 origin-right rotate-[150deg] -top-8 left-6"></div> <!-- Line A-B -->
+                    <div class="diagram-node">B</div>
+                    <div class="text-xs text-gray-500 mt-1">等: max(左,右)+1</div>
+                    <div class="arrow-up absolute -right-12 top-2">汇报 3 ↗</div>
+                </div>
+
+                <!-- Right C -->
+                <div class="absolute top-24 right-1/3 transform translate-x-1/2 flex flex-col items-center">
+                    <div class="diagram-line w-24 h-0.5 origin-left rotate-[30deg] -top-8 -left-6"></div> <!-- Line A-C -->
+                    <div class="diagram-node">C</div>
+                    <div class="text-xs text-gray-500 mt-1">等: max(左,右)+1</div>
+                    <div class="arrow-up absolute -left-12 top-2">↖ 汇报 3</div>
+                </div>
+
+                <!-- Child D (Sample) -->
+                 <div class="absolute top-44 left-1/4 flex flex-col items-center">
+                    <div class="diagram-line w-16 h-0.5 origin-right rotate-[140deg] -top-6 left-4"></div>
+                    <div class="diagram-node bg-gray-400">D</div>
+                    <div class="text-xs text-gray-500 mt-1">...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第四部分：踩坑记录 -->
+        <div class="card border-l-4 border-red-500">
+            <h2 class="text-xl font-bold text-red-600 mb-4">4. 也是重点：我踩过的坑 (优化)</h2>
+            <p class="mb-4">上面的代码虽然能过测试点，但我复盘的时候发现一个<strong>严重的效率问题</strong>。</p>
+
+            <div class="space-y-6">
+                <!-- 问题 1 -->
+                <div>
+                    <h3 class="font-bold text-gray-800">❌ 坑：重复计算</h3>
+                    <p class="text-gray-700 text-sm mb-2">
+                        大家看这行代码：<code>if (GetHeight(BT->Left) > ...)</code> 这里已经算了一次左边的高度。
+                        但是紧接着 <code>return GetHeight(BT->Left) + 1</code> 这里<strong>又算了一次</strong>！
+                        如果树很大，这就像是老板问了我一次业绩，我辛苦算完汇报了，结果老板转头忘了，又让我重新算一遍。
+                    </p>
+                    
+                    <div class="bg-green-50 p-4 rounded border border-green-200">
+                        <h4 class="font-bold text-green-700 mb-2">✅ 改进后的高分写法：</h4>
+                        <p class="text-sm mb-2">把算出来的结果<strong>存起来</strong>，只算一次。</p>
+                        <pre><code class="language-c">int GetHeight(BinTree BT) {
+    if (BT == NULL) return 0;
+    
+    // 1. 先用变量存下来，避免重复跑路
+    int HL = GetHeight(BT->Left);
+    int HR = GetHeight(BT->Right);
+    
+    // 2. 直接用存好的变量比较
+    return (HL > HR ? HL : HR) + 1;
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第五部分：非递归解法 -->
+        <div class="card border-l-4 border-purple-500">
+            <h2 class="text-xl font-bold text-purple-600 mb-4">5. 拓展思考：如果不用递归怎么做？</h2>
+            <p class="mb-4">有的面试官可能会问：“如果怕递归爆栈，能不能用循环来做？”</p>
+            <p class="mb-2 text-gray-700">这其实就是<strong>层序遍历 (BFS)</strong>。我们可以想象成剥洋葱，或者切西瓜，一层一层地切。</p>
+
+            <div class="bg-gray-50 p-4 rounded border">
+                <h3 class="font-bold text-gray-800 mb-2">解法逻辑：</h3>
+                <ol class="list-decimal list-inside text-gray-600 text-sm mb-4">
+                    <li>准备一个<strong>队列</strong>，先把根节点放进去。</li>
+                    <li>只要队列不空，就说明还有节点没处理。</li>
+                    <li><strong>关键点：</strong> 每次处理<strong>一整层</strong>。比如现在队列里有3个节点，我就循环3次把它们都拿出来，同时把它们的孩子都放进队尾。</li>
+                    <li>每处理完一层，高度就 +1。</li>
+                </ol>
+
+                <pre><code class="language-c">// 非递归版本参考代码 (需借助队列)
+int GetHeight_Iterative(BinTree BT) {
+    if (!BT) return 0;
+    
+    // 简单的队列模拟（假设树规模不超过1000）
+    BinTree Q[1000]; 
+    int front = 0, rear = 0;
+    
+    Q[rear++] = BT; // 根节点入队
+    int height = 0;
+    
+    while(front < rear) {
+        // 当前队列里的元素个数，就是这一层的节点数
+        int count = rear - front; 
+        
+        // 处理这一层的每一个节点
+        while(count > 0) {
+            BinTree node = Q[front++]; // 出队
+            if(node->Left) Q[rear++] = node->Left;   // 左孩子入队
+            if(node->Right) Q[rear++] = node->Right; // 右孩子入队
+            count--;
+        }
+        // 处理完一层，高度+1
+        height++;
+    }
+    return height;
+}</code></pre>
+            </div>
+        </div>
+
+        <!-- 第六部分：总结 -->
+        <div class="card bg-indigo-900 text-white">
+            <h2 class="text-xl font-bold mb-2">6. 总结一下</h2>
+            <ul class="list-disc list-inside space-y-2">
+                <li><strong>递归法：</strong> 代码短，逻辑是 <code>MAX(左, 右) + 1</code>，但记得优化（存变量）。</li>
+                <li><strong>非递归法：</strong> 也就是层序遍历，用队列一层层数，逻辑更直观但代码稍长。</li>
+                <li>希望这个分享对大家有帮助！</li>
+            </ul>
+        </div>
+
+    </div>
+
+</body>
+</html>

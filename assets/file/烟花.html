@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gesture Controlled Particles | 手势交互粒子系统</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #050505; font-family: 'Segoe UI', sans-serif; }
+        #video-input { position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; z-index: -1; }
+        #ui-container {
+            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+            display: flex; align-items: center; gap: 24px; padding: 16px 32px;
+            background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.1); z-index: 10;
+        }
+       .control-group { display: flex; align-items: center; gap: 10px; color: rgba(255, 255, 255, 0.8); font-size: 14px; }
+        input[type="color"] { -webkit-appearance: none; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; background: none; padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: 2px solid rgba(255,255,255,0.5); border-radius: 50%; }
+        button.icon-btn {
+            background: rgba(255, 255, 255, 0.1); border: none; width: 40px; height: 40px; border-radius: 50%;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; color: white;
+        }
+        #loader { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; text-align: center; pointer-events: none; transition: opacity 0.5s; }
+       .spinner { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #00ff88; animation: spin 1s infinite; margin: 0 auto 15px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <video id="video-input" playsinline></video>
+
+    <div id="loader">
+        <div class="spinner"></div>
+        <div id="loading-text">初始化神经网络...</div>
+        <div style="margin-top: 10px; opacity: 0.7; font-size: 0.9rem;">请允许摄像头权限以启用手势控制</div>
+    </div>
+
+    <div id="ui-container">
+        <div class="control-group">
+            <input type="color" id="color-picker" value="#00ff88">
+            <span>粒子颜色</span>
+        </div>
+        <div style="width: 1px; height: 24px; background: rgba(255,255,255,0.1);"></div>
+        <button id="fullscreen-btn" class="icon-btn">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+        </button>
+    </div>
+
+    <script type="x-shader/x-vertex" id="vertexShader">
+        uniform float uTime;
+        uniform float uOpenness; 
+        uniform float uScale;    
+        uniform vec3 uCenter;    
+
+        attribute vec3 aRandom;  
+        attribute float aSize;   
+
+        varying float vAlpha;    
+
+        void main() {
+            float expansionRadius = uOpenness * 4.0 * uScale; 
+            float breathing = sin(uTime * 1.5 + aRandom.x * 10.0) * 0.05 * uScale;
+            vec3 turbulence = vec3(
+                sin(uTime * 2.0 + position.y),
+                cos(uTime * 1.5 + position.x),
+                sin(uTime * 2.5 + position.z)
+            ) * 0.1 * uOpenness;
+
+            vec3 newPos = position + aRandom * (expansionRadius + breathing) + turbulence;
+            newPos += uCenter;
+
+            vec4 mvPosition = modelViewMatrix * vec4(newPos, 1.0);
+            gl_Position = projectionMatrix * mvPosition;
+
+            gl_PointSize = aSize * (300.0 / -mvPosition.z);
+            vAlpha = smoothstep(0.1, 0.3, uOpenness);
+        }
+    </script>
+
+    <script type="x-shader/x-fragment" id="fragmentShader">
+        uniform vec3 uColor;
+        varying float vAlpha;
+
+        void main() {
+            float d = distance(gl_PointCoord, vec2(0.5));
+            if (d > 0.5) discard;
+            float glow = 0.05 / (d + 0.05) - 0.1;
+            glow = clamp(glow, 0.0, 1.0);
+            vec3 finalColor = mix(uColor, vec3(1.0), glow * 0.4);
+            gl_FragColor = vec4(finalColor, vAlpha * glow);
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'https://cdn.skypack.dev/three@0.136.0';
+        import { Hands } from 'https://cdn.skypack.dev/@mediapipe/hands';
+        import { Camera } from 'https://cdn.skypack.dev/@mediapipe/camera_utils';
+
+        let scene, camera, renderer, material;
+        const videoElement = document.getElementById('video-input');
+        const loader = document.getElementById('loader');
+
+        const state = {
+            targetOpenness: 0, currentOpenness: 0,
+            targetScale: 1.0, currentScale: 1.0,
+            targetCenter: new THREE.Vector3(0, 0, 0),
+            currentCenter: new THREE.Vector3(0, 0, 0),
+            color: new THREE.Color('#00ff88')
+        };
+
+        function initThree() {
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x050505, 0.02);
+
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.z = 5;
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            document.body.appendChild(renderer.domElement);
+
+            createParticles();
+            window.addEventListener('resize', onWindowResize, false);
+            animate();
+        }
+
+        function createParticles() {
+            const count = 30000;
+            const positions = new Float32Array(count * 3);
+            const randomness = new Float32Array(count * 3);
+            const sizes = new Float32Array(count);
+
+            for (let i = 0; i < count; i++) {
+                positions[i*3] = positions[i*3+1] = positions[i*3+2] = 0;
+                
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.acos(2 * Math.random() - 1);
+                randomness[i*3] = Math.sin(phi) * Math.cos(theta);
+                randomness[i*3+1] = Math.sin(phi) * Math.sin(theta);
+                randomness[i*3+2] = Math.cos(phi);
+                
+                sizes[i] = Math.random() * 2.0 + 0.5;
+            }
+
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('aRandom', new THREE.BufferAttribute(randomness, 3));
+            geometry.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
+
+            material = new THREE.ShaderMaterial({
+                uniforms: {
+                    uTime: { value: 0 },
+                    uOpenness: { value: 0 },
+                    uScale: { value: 1.0 },
+                    uCenter: { value: new THREE.Vector3() },
+                    uColor: { value: state.color }
+                },
+                vertexShader: document.getElementById('vertexShader').textContent,
+                fragmentShader: document.getElementById('fragmentShader').textContent,
+                transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
+            });
+            scene.add(new THREE.Points(geometry, material));
+        }
+
+        function initVision() {
+            const hands = new Hands({
+                locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+            });
+            hands.setOptions({
+                maxNumHands: 2, modelComplexity: 1, minDetectionConfidence: 0.5, minTrackingConfidence: 0.5
+            });
+            hands.onResults(onHandsResults);
+
+            const cameraUtils = new Camera(videoElement, {
+                onFrame: async () => { await hands.send({image: videoElement}); },
+                width: 640, height: 480
+            });
+            cameraUtils.start().then(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 500);
+            });
+        }
+
+        function onHandsResults(results) {
+            if (results.multiHandLandmarks.length > 0) {
+                let maxOpenness = 0;
+                let centerX = 0, centerY = 0;
+                const handCount = results.multiHandLandmarks.length;
+                let handsPositions = []; 
+
+                for (const landmarks of results.multiHandLandmarks) {
+                    const wrist = landmarks[0]; 
+                    const middleFingerMCP = landmarks[9]; // 使用索引9作为中心更稳
+                    
+                    const tips = [4, 8, 12, 16, 20]; // 正确的指尖索引
+                    
+                    // 计算参考尺度
+                    const scaleRef = distance(wrist, middleFingerMCP); 
+                    
+                    let avgTipDist = 0;
+                    tips.forEach(idx => {
+                        avgTipDist += distance(wrist, landmarks[idx]);
+                    });
+                    avgTipDist /= 5;
+
+                    // 归一化张合度
+                    let openness = (avgTipDist / scaleRef - 1.0) / 1.2;
+                    openness = Math.max(0, Math.min(1, openness));
+                    if (openness > maxOpenness) maxOpenness = openness;
+
+                    // --- 修复点：修正语法错误 ---
+                    centerX += landmarks[9].x; // 之前是 landmarks.[2]x
+                    centerY += landmarks[9].y; // 之前是 landmarks.[2]y
+                    
+                    handsPositions.push(landmarks[9]);
+                }
+
+                // 映射坐标
+                const viewWidth = 10;
+                const viewHeight = viewWidth * (window.innerHeight / window.innerWidth);
+                const avgX = centerX / handCount;
+                const avgY = centerY / handCount;
+
+                state.targetCenter.set(-(avgX - 0.5) * viewWidth, -(avgY - 0.5) * viewHeight, 0);
+
+                // 双手缩放控制
+                if (handCount === 2) {
+                    const dist = distance(handsPositions[0], handsPositions[1]);
+                    let s = (dist - 0.2) * 3.0 + 0.5;
+                    state.targetScale = Math.max(0.5, Math.min(3.0, s));
+                } else {
+                    state.targetScale = 1.0;
+                }
+                state.targetOpenness = maxOpenness > 0.1? maxOpenness : 0;
+            } else {
+                state.targetOpenness = 0;
+            }
+        }
+
+        function distance(p1, p2) {
+            return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2) + (p1.z && p2.z? Math.pow(p1.z - p2.z, 2) : 0));
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const smoothing = 0.1;
+            state.currentOpenness += (state.targetOpenness - state.currentOpenness) * smoothing;
+            state.currentScale += (state.targetScale - state.currentScale) * smoothing;
+            state.currentCenter.lerp(state.targetCenter, smoothing);
+
+            if (material) {
+                material.uniforms.uTime.value += 0.01;
+                material.uniforms.uOpenness.value = state.currentOpenness;
+                material.uniforms.uScale.value = state.currentScale;
+                material.uniforms.uCenter.value.copy(state.currentCenter);
+            }
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        document.getElementById('color-picker').addEventListener('input', (e) => {
+            state.color.set(e.target.value);
+            if(material) material.uniforms.uColor.value.copy(state.color);
+        });
+
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) document.body.requestFullscreen().catch(e=>console.log(e));
+            else document.exitFullscreen();
+        });
+
+        initThree();
+        initVision();
+    </script>
+</body>
+</html>

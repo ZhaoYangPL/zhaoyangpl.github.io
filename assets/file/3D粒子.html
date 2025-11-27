@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 手势控制粒子太阳系</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #000000; font-family: 'Segoe UI', sans-serif; }
+        canvas { display: block; }
+        
+        /* UI 面板样式 */
+        #ui-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            padding: 25px;
+            background: rgba(20, 20, 35, 0.7); /* 更深色的背景 */
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e0e0ff;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        h2 { margin: 0 0 20px 0; font-size: 20px; font-weight: 600; letter-spacing: 1px; color: #fff; text-align: center;}
+        
+        .control-group { margin-bottom: 20px; }
+        .control-header { font-size: 13px; color: #8a8ab5; margin-bottom: 10px; display: block;}
+        
+        /* 按钮网格 */
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
+        button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #c0c0e0;
+            padding: 12px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        button:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-2px); }
+        /* 特殊高亮样式 */
+        button.active.morph-mode { background: linear-gradient(135deg, #00d2ff, #3a7bd5); color: white; border: none; box-shadow: 0 4px 15px rgba(0, 210, 255, 0.4); }
+        button.active.solar-mode { background: linear-gradient(135deg, #ff9900, #ff5e00); color: white; border: none; box-shadow: 0 4px 15px rgba(255, 153, 0, 0.4); }
+
+        /* 颜色选择器 - 仅在特定模式显示 */
+        #color-control-group { transition: opacity 0.3s; }
+        input[type="color"] {
+            width: 100%; height: 40px; border: none; border-radius: 10px; cursor: pointer; background: transparent;
+        }
+
+        /* 摄像头预览 */
+        #video-preview-container {
+            position: absolute; bottom: 30px; left: 30px;
+            width: 180px; height: 135px;
+            border-radius: 15px; overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+        #video-preview { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); opacity: 0.8; }
+        #hand-tracking-overlay {
+            position: absolute; top: 10px; left: 10px; font-size: 12px; color: white; background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 6px; pointer-events: none;
+        }
+
+        #status {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            color: white; font-size: 24px; text-align: center; pointer-events: none; transition: opacity 0.8s;
+            text-shadow: 0 0 20px rgba(0, 210, 255, 0.8);
+        }
+        .hide { opacity: 0; pointer-events: none;}
+        
+        .fullscreen-btn { margin-top: 15px; width: 100%; background: rgba(255, 255, 255, 0.08); }
+    </style>
+</head>
+<body>
+
+    <div id="status">正在启动神经连接与全息投影...<br><span style="font-size:14px; opacity:0.7; letter-spacing: 2px;">请授予摄像头权限</span></div>
+
+    <div id="video-preview-container">
+        <div id="hand-tracking-overlay">AI 手势追踪中</div>
+        <video id="video-preview" playsinline></video>
+    </div>
+
+    <div id="ui-container">
+        <h2>星际交互系统</h2>
+        
+        <div class="control-group">
+            <span class="control-header">全息模式选择</span>
+            <div class="btn-grid" id="shape-buttons">
+                <button onclick="setMode('solarsystem')" style="grid-column: span 2; font-weight: bold;">🌌 太阳系 (新)</button>
+                
+                <button onclick="setMode('heart')" class="active morph-mode">❤️ 爱心</button>
+                <button onclick="setMode('sphere')">🪐 行星体</button>
+                <button onclick="setMode('flower')">🌸 量子花</button>
+                <button onclick="setMode('spiral')">🌀 时空类星体</button>
+                <button onclick="setMode('cube')">🧊 超立方体</button>
+                <button onclick="setMode('fireworks')">🎆 星云爆发</button>
+            </div>
+        </div>
+
+        <div class="control-group" id="color-control-group">
+            <span class="control-header">粒子波长 (颜色)</span>
+            <input type="color" id="color-picker" value="#00d2ff">
+        </div>
+
+        <div class="control-group" style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px;">
+            <span class="control-header" style="margin-bottom: 5px;">手势遥测状态</span>
+            <div id="hand-status" style="color:#00d2ff; font-size: 16px; font-weight: 600; margin-bottom: 8px;">等待信号...</div>
+            <div style="font-size: 12px; opacity: 0.6; line-height: 1.5;">
+                ✋ 移动手掌: 控制旋转与翻动<br>
+                👋 张开五指: 放大星系/扩散<br>
+                👌 捏合手指: 缩小星系/聚合
+            </div>
+        </div>
+
+        <button class="fullscreen-btn" onclick="toggleFullScreen()">⛶ 沉浸式全屏</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+    <script>
+        // --- 1. Three.js 场景初始化 ---
+        const scene = new THREE.Scene();
+        // 使用更深邃的太空背景雾
+        scene.fog = new THREE.FogExp2(0x000005, 0.0015);
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+        camera.position.z = 50;
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.body.appendChild(renderer.domElement);
+
+        // --- 全局状态变量 ---
+        let currentMode = 'morph'; // 'morph' (形状变换) 或 'solar' (太阳系)
+        let handInteractionFactor = 0; 
+        let targetRotation = { x: 0, y: 0 };
+        let isHandDetected = false; 
+        let baseScale = 1; // 用于太阳系的整体缩放
+
+        // ==========================================
+        // === 模式 A: 变形粒子系统 (原有功能) ===
+        // ==========================================
+        const particleCount = 25000; // 增加粒子数以获得更好的效果
+        const morphGeometry = new THREE.BufferGeometry();
+        const morphPositions = new Float32Array(particleCount * 3);
+        const targetPositions = new Float32Array(particleCount * 3); 
+        const baseTargetPositions = new Float32Array(particleCount * 3);
+
+        for(let i = 0; i < particleCount * 3; i++) {
+            morphPositions[i] = (Math.random() - 0.5) * 200;
+            targetPositions[i] = morphPositions[i];
+            baseTargetPositions[i] = morphPositions[i];
+        }
+
+        morphGeometry.setAttribute('position', new THREE.BufferAttribute(morphPositions, 3));
+
+        const morphMaterial = new THREE.PointsMaterial({
+            color: 0x00d2ff,
+            size: 0.25,
+            sizeAttenuation: true,
+            transparent: true,
+            opacity: 0.85,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false
+        });
+
+        const morphParticles = new THREE.Points(morphGeometry, morphMaterial);
+        scene.add(morphParticles);
+
+        // --- 形状计算算法 ---
+        function getSpherePoint(r) {
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos(2 * Math.random() - 1);
+            return {
+                x: r * Math.sin(phi) * Math.cos(theta),
+                y: r * Math.sin(phi) * Math.sin(theta),
+                z: r * Math.cos(phi)
+            };
+        }
+
+        function calculateShape(type) {
+            for (let i = 0; i < particleCount; i++) {
+                let x, y, z;
+                const idx = i * 3;
+                // 为了简洁，这里使用了简化的单行写法，逻辑与之前相同
+                switch (type) {
+                    case 'heart':
+                        const t=Math.random()*6.28, r=Math.random(), s=1.2;
+                        x=16*Math.pow(Math.sin(t),3)*s*Math.sqrt(r); 
+                        y=(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))*s*Math.sqrt(r); 
+                        z=(Math.random()-0.5)*8; break;
+                    case 'sphere':
+                        const p = getSpherePoint(18 + Math.random()*2); x=p.x;y=p.y;z=p.z; break;
+                    case 'flower':
+                        const ft=Math.random()*6.28, fr=18*Math.cos(6*ft)*Math.random();
+                        x=fr*Math.cos(ft); y=fr*Math.sin(ft); z=(Math.random()-0.5)*8; break;
+                    case 'spiral':
+                        const st=i*0.08, sr=Math.sqrt(i)*0.15;
+                        x=sr*Math.cos(st); y=(Math.random()-0.5)*(30-sr*0.5); z=sr*Math.sin(st); break;
+                    case 'cube':
+                        const cs=22; x=(Math.random()-0.5)*cs; y=(Math.random()-0.5)*cs; z=(Math.random()-0.5)*cs; break;
+                    case 'fireworks':
+                        const fp=getSpherePoint(Math.random()*40); x=fp.x; y=fp.y; z=fp.z; break;
+                }
+                baseTargetPositions[idx] = x; baseTargetPositions[idx+1] = y; baseTargetPositions[idx+2] = z;
+            }
+        }
+
+        // ==========================================
+        // === 模式 B: 粒子太阳系 (新功能) ===
+        // ==========================================
+        const solarSystemGroup = new THREE.Group();
+        scene.add(solarSystemGroup);
+        solarSystemGroup.visible = false; // 默认隐藏
+
+        // 辅助函数：创建粒子球体（用于行星和太阳）
+        function createParticleSphere(radius, count, color, size) {
+            const geom = new THREE.BufferGeometry();
+            const pos = new Float32Array(count * 3);
+            for(let i=0; i<count; i++) {
+                const p = getSpherePoint(radius * (0.9 + Math.random()*0.2)); // 稍微一点厚度随机
+                pos[i*3] = p.x; pos[i*3+1] = p.y; pos[i*3+2] = p.z;
+            }
+            geom.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+            const mat = new THREE.PointsMaterial({
+                color: color, size: size, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending, depthWrite: false
+            });
+            return new THREE.Points(geom, mat);
+        }
+
+        // 辅助函数：创建轨道线
+        function createOrbit(radius, color) {
+            const points = [];
+            const segments = 128;
+            for (let i = 0; i <= segments; i++) {
+                const theta = (i / segments) * Math.PI * 2;
+                points.push(new THREE.Vector3(Math.cos(theta) * radius, 0, Math.sin(theta) * radius));
+            }
+            const geom = new THREE.BufferGeometry().setFromPoints(points);
+            const mat = new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: 0.3 });
+            return new THREE.LineLoop(geom, mat);
+        }
+
+        // 1. 创建太阳
+        const sun = createParticleSphere(8, 8000, 0xffaa00, 0.6); // 更大、更密、更亮的太阳
+        solarSystemGroup.add(sun);
+
+        // 2. 创建行星数据结构
+        const planets = [];
+        const planetData = [
+            { name: 'Mercury', r: 1.5, dist: 14, color: 0xaaaaaa, speed: 0.04 },
+            { name: 'Venus', r: 2.2, dist: 20, color: 0xffcc66, speed: 0.03 },
+            { name: 'Earth', r: 2.4, dist: 28, color: 0x00d2ff, speed: 0.025 },
+            { name: 'Mars', r: 2.0, dist: 36, color: 0xff4400, speed: 0.02 },
+            { name: 'Jupiter', r: 5.0, dist: 55, color: 0xdba35c, speed: 0.01 },
+            { name: 'Saturn', r: 4.5, dist: 75, color: 0xfcdc9c, speed: 0.008, hasRing: true },
+        ];
+
+        planetData.forEach(data => {
+            // 创建行星旋转轴心点 (Pivot)
+            const pivot = new THREE.Group();
+            solarSystemGroup.add(pivot);
+
+            // 创建行星体
+            const planetMesh = createParticleSphere(data.r, data.r * 800, data.color, 0.3);
+            planetMesh.position.x = data.dist; // 设置轨道距离
+            pivot.add(planetMesh);
+
+            // 创建可视轨道
+            solarSystemGroup.add(createOrbit(data.dist, data.color));
+
+            // 特殊处理：土星光环
+            if (data.hasRing) {
+                const ringGeom = new THREE.BufferGeometry();
+                const ringPos = new Float32Array(4000 * 3);
+                for(let i=0; i<4000; i++) {
+                    const ang = Math.random() * Math.PI * 2;
+                    const rad = data.r * 1.4 + Math.random() * data.r * 1.5; // 光环半径范围
+                    ringPos[i*3] = Math.cos(ang) * rad;
+                    ringPos[i*3+1] = (Math.random()-0.5) * 0.5; // 薄薄一层
+                    ringPos[i*3+2] = Math.sin(ang) * rad;
+                }
+                ringGeom.setAttribute('position', new THREE.BufferAttribute(ringPos, 3));
+                const ringMat = new THREE.PointsMaterial({ color: 0xc0b090, size: 0.2, transparent: true, opacity: 0.6, blending: THREE.AdditiveBlending });
+                const ring = new THREE.Points(ringGeom, ringMat);
+                planetMesh.add(ring); // 加到行星Mesh上
+                ring.rotation.x = 0.5; // 倾斜光环
+            }
+
+            planets.push({ pivot: pivot, mesh: planetMesh, speed: data.speed, selfRotationSpeed: Math.random() * 0.02 + 0.01 });
+        });
+
+
+        // ==========================================
+        // === 交互逻辑控制 ===
+        // ==========================================
+        
+        // 切换模式与形状
+        window.setMode = function(modeType) {
+            const colorControl = document.getElementById('color-control-group');
+            const buttons = document.querySelectorAll('#shape-buttons button');
+
+            if (modeType === 'solarsystem') {
+                // 切换到太阳系模式
+                currentMode = 'solar';
+                morphParticles.visible = false;
+                solarSystemGroup.visible = true;
+                // 太阳系模式下隐藏颜色选择器，因为行星有自己的颜色
+                colorControl.style.opacity = 0; 
+                // 重置缩放
+                baseScale = 1;
+
+            } else {
+                // 切换到变形模式
+                currentMode = 'morph';
+                morphParticles.visible = true;
+                solarSystemGroup.visible = false;
+                colorControl.style.opacity = 1;
+                calculateShape(modeType);
+            }
+            
+            // 更新 UI 按钮状态
+            buttons.forEach(btn => {
+                btn.classList.remove('active', 'morph-mode', 'solar-mode');
+                if (modeType === 'solarsystem' && btn.innerText.includes('太阳系')) {
+                    btn.classList.add('active', 'solar-mode');
+                } else if (currentMode === 'morph') {
+                     const map = {'heart':'爱心','sphere':'行星','flower':'花朵','spiral':'禅意','cube':'立方体','fireworks':'烟花'};
+                     if(btn.innerText.includes(map[modeType])) btn.classList.add('active', 'morph-mode');
+                }
+            });
+        };
+
+        // 颜色与全屏
+        document.getElementById('color-picker').addEventListener('input', (e) => morphMaterial.color.set(e.target.value));
+        window.toggleFullScreen = function() {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+            else if (document.exitFullscreen) document.exitFullscreen();
+        };
+
+        // ==========================================
+        // === AI 手势识别核心 ===
+        // ==========================================
+        const handStatusText = document.getElementById('hand-status');
+
+        function onResults(results) {
+            document.getElementById('status').classList.add('hide');
+
+            if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+                isHandDetected = true;
+                const landmarks = results.multiHandLandmarks[0];
+                const thumb = landmarks[4];
+                const index = landmarks[8];
+                const wrist = landmarks[0];
+
+                // 1. 捏合计算 (控制缩放/扩散)
+                const distance = Math.sqrt(Math.pow(thumb.x - index.x, 2) + Math.pow(thumb.y - index.y, 2));
+
+                if (distance < 0.05) {
+                    handStatusText.html = "👌 捏合 <span style='font-size:12px'>(聚合/缩小)</span>";
+                    handStatusText.style.color = "#ffdd00";
+                    // 捏合时，InteractionFactor 变负
+                    handInteractionFactor = THREE.MathUtils.lerp(handInteractionFactor, -1, 0.1);
+                } else if (distance > 0.15) {
+                    handStatusText.innerHTML = "👋 张开 <span style='font-size:12px'>(扩散/放大)</span>";
+                    handStatusText.style.color = "#00ff88";
+                    // 张开时，InteractionFactor 变正
+                    handInteractionFactor = THREE.MathUtils.lerp(handInteractionFactor, 2, 0.1);
+                } else {
+                    handStatusText.innerText = "✋ 已连接 - 移动控制视角";
+                    handStatusText.style.color = "#00d2ff";
+                    handInteractionFactor = THREE.MathUtils.lerp(handInteractionFactor, 0, 0.1);
+                }
+
+                // 2. 旋转映射 (手腕位置控制旋转)
+                // 映射范围扩大，让旋转更灵敏
+                targetRotation.y = (wrist.x - 0.5) * 5; 
+                targetRotation.x = (wrist.y - 0.5) * 4; 
+
+            } else {
+                isHandDetected = false;
+                handStatusText.innerText = "等待信号...";
+                handStatusText.style.color = "#555";
+                handInteractionFactor = THREE.MathUtils.lerp(handInteractionFactor, 0, 0.05);
+            }
+        }
+
+        const hands = new Hands({locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`});
+        hands.setOptions({ maxNumHands: 1, modelComplexity: 1, minDetectionConfidence: 0.6, minTrackingConfidence: 0.6 });
+        hands.onResults(onResults);
+
+        const videoElement = document.getElementById('video-preview');
+        const cameraUtils = new Camera(videoElement, {
+            onFrame: async () => { await hands.send({image: videoElement}); },
+            width: 640, height: 480
+        });
+        cameraUtils.start().then(() => console.log("摄像头已启动")).catch(err => document.getElementById('status').innerHTML = "错误：无法访问摄像头权限");
+
+        // ==========================================
+        // === 主动画循环 (核心渲染逻辑) ===
+        // ==========================================
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = clock.getElapsedTime();
+
+            // --- 通用旋转逻辑 (适用于两种模式) ---
+            let activeObject = currentMode === 'solar' ? solarSystemGroup : morphParticles;
+
+            if (isHandDetected) {
+                // 手势控制旋转
+                activeObject.rotation.y += (targetRotation.y - activeObject.rotation.y) * 0.08;
+                activeObject.rotation.x += (targetRotation.x - activeObject.rotation.x) * 0.08;
+            } else {
+                // 待机自动慢旋
+                activeObject.rotation.y += 0.0015;
+                activeObject.rotation.x += (0 - activeObject.rotation.x) * 0.05;
+            }
+
+            // --- 模式差异化渲染 ---
+            if (currentMode === 'solar') {
+                // >>> 太阳系模式动画 <<<
+                
+                // 1. 行星公转与自转
+                sun.rotation.y = time * 0.05; // 太阳自转
+                planets.forEach(p => {
+                    p.pivot.rotation.y += p.speed; // 公转
+                    p.mesh.rotation.y += p.selfRotationSpeed; // 自转
+                });
+
+                // 2. 整体缩放控制 (基于手势捏合)
+                // handInteractionFactor 范围大概在 -1 到 2 之间
+                // 我们将其映射到 0.5倍 到 3倍 的缩放范围
+                let targetScale = 1 + handInteractionFactor * 0.8;
+                // 限制最小最大缩放值
+                targetScale = THREE.MathUtils.clamp(targetScale, 0.4, 3.5);
+                // 平滑缩放
+                baseScale = THREE.MathUtils.lerp(baseScale, targetScale, 0.1);
+                solarSystemGroup.scale.set(baseScale, baseScale, baseScale);
+
+            } else {
+                // >>> 变形模式动画 (原逻辑) <<<
+                const positionsAttribute = morphGeometry.attributes.position;
+                const array = positionsAttribute.array;
+                for(let i = 0; i < particleCount; i++) {
+                    const idx = i * 3;
+                    let tx = baseTargetPositions[idx], ty = baseTargetPositions[idx+1], tz = baseTargetPositions[idx+2];
+                    // 爆炸/收缩
+                    if (Math.abs(handInteractionFactor) > 0.1) {
+                        const dist = Math.sqrt(tx*tx + ty*ty + tz*tz) + 0.1;
+                        const offset = handInteractionFactor * (dist * 0.6 + Math.random() * 3);
+                        tx += (tx/dist)*offset; ty += (ty/dist)*offset; tz += (tz/dist)*offset;
+                    }
+                    // 平滑插值飞向目标
+                    array[idx] += (tx - array[idx])*0.08; array[idx+1] += (ty - array[idx+1])*0.08; array[idx+2] += (tz - array[idx+2])*0.08;
+                }
+                positionsAttribute.needsUpdate = true;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        // 启动
+        calculateShape('heart'); // 默认初始形状
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
