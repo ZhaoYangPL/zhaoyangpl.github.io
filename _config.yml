@@ -27,7 +27,7 @@ url: "https://zhaoyangpl.github.io"
 
 # Public URL of the Vercel Functions project that powers the private editor.
 # Deploy `admin-api/` first, then replace this placeholder with its production URL.
-editor_api_url: "https://YOUR-VERCEL-PROJECT.vercel.app"
+editor_api_url: "https://zhaoyangpl-admin-api.vercel.app"
 
 github:
   username: ZhaoYangPL # change to your GitHub username

@@ -19,7 +19,7 @@ private posts and private images unrecoverable.
 
 ## 2. Create the GitHub token
 
-Create a fine-grained personal access token restricted to `ZhaoYangPL/zhaoyang.github.io` with only
+Create a fine-grained personal access token restricted to `ZhaoYangPL/zhaoyangpl.github.io` with only
 **Repository permissions → Contents: Read and write**. Workflows permission is not needed because the API only adds
 posts, category data, and images; the existing push workflow runs automatically.
 
