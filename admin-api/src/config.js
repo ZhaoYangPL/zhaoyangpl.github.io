@@ -19,7 +19,7 @@ export function githubConfig() {
   return {
     token: requiredEnv('GITHUB_TOKEN'),
     owner: optionalEnv('GITHUB_OWNER', 'ZhaoYangPL'),
-    repo: optionalEnv('GITHUB_REPO', 'zhaoyang.github.io'),
+    repo: optionalEnv('GITHUB_REPO', 'zhaoyangpl.github.io'),
     branch: optionalEnv('GITHUB_BRANCH', 'main'),
     apiVersion: optionalEnv('GITHUB_API_VERSION', '2022-11-28')
   };
