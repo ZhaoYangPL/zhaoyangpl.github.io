@@ -1,0 +1,18 @@
+<div id="guestbookModal" class="guestbook-modal-overlay" aria-hidden="true">
+  <div class="guestbook-modal-content" role="dialog" aria-modal="true" aria-labelledby="guestbook-title">
+    <h2 id="guestbook-title">Welcome to Weekend's world</h2>
+    <p>Glad to know your name:</p>
+    <form
+      action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScTAy2apX4SeRLuae-eFza2WToJbLDADKVduKiW4wip8wMJkQ/formResponse?embedded=true"
+      method="POST"
+      target="hidden_iframe"
+      id="visitor-name-form"
+    >
+      <label class="visually-hidden" for="visitor_name">Your name</label>
+      <input type="text" id="visitor_name" name="entry.1623474267" required placeholder="Please enter your name...">
+      <button type="submit">Enter</button>
+    </form>
+  </div>
+</div>
+<iframe name="hidden_iframe" id="hidden_iframe" class="d-none" title="Visitor form response"></iframe>
+<script src="{{ '/assets/js/visitor-modal.js' | relative_url }}" defer></script>

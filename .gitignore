@@ -14,6 +14,10 @@ _site
 # NPM dependencies
 node_modules
 package-lock.json
+.vercel
+.env
+.env.*
+!.env.example
 
 # IDE configurations
 .idea

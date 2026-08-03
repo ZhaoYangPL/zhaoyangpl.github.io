@@ -1,0 +1,13 @@
+{
+  "name": "weekend-blog-admin-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test",
+    "generate-secrets": "node scripts/generate-secrets.js"
+  }
+}

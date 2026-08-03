@@ -1,0 +1,27 @@
+---
+title: Hating 8AM Calss!
+date: 2025-10-10 10:46:00 +0800
+categories: [Blog, Daily]
+tags: [daily]
+---
+
+## Killing me to wake up in time !
+
+Actually, waking up at 8am is not the worst, but the place. Our classroom is in SOM(school of management), which, I bet, must be 2 km away from my residence. Torturous!
+
+Class in the morning is 'Database', not so difficult, thus I have time to write my diary. And below is my [homework](/assets/file/习题+上机作业3A%202025.docx).
+
+Well, it may be a good choice to review the class in the morning. [Notes]({% post_url 2025-10-10-SQLServerNotes %})
+
+Class in the afternoon is quite weird, for our CN teacher talked about nothing. Perhaps revise the development of DL.
+
+I found my visa card is completed, so I supposed to wait the card to arrive. Only when I recieve that card, could I deploy the model locally and continue my research.(Also the reason wyhy I have time to write my web hhh)
+
+***
+I mainly focused on comment section and visitorName system yesterday. Unfortunately, failed in the latter one. I don't think that's unacceptable or I am too weak. Every blossom need time to bloom. Same as my web. It's failure makes me strong!
+
+And in today's work, I was defeated by 'how to decoder the encodered page'. Upset again, but i'll just put it away and let it go. **I'm sure one day I'll make it out**. Time will prove everthing.
+
+*** 
+Below is the lesson on how to use a correct url reffering to other docs.
+![](/assets/img/经验001.png)

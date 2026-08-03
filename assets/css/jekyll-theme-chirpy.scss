@@ -1,0 +1,551 @@
+---
+---
+
+/* prettier-ignore */
+@use 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
+
+:root {
+  --weekend-accent: #3772ff;
+  --weekend-accent-soft: rgba(55, 114, 255, 0.12);
+  --weekend-success: #16845b;
+  --weekend-danger: #c33c54;
+}
+
+.home-about-card {
+  margin: 0 0 2rem;
+  padding: clamp(1.4rem, 3vw, 2.25rem);
+  border: 1px solid var(--main-border-color);
+  border-radius: 1rem;
+  background:
+    radial-gradient(circle at 100% 0, var(--weekend-accent-soft), transparent 42%),
+    var(--card-bg);
+  box-shadow: var(--card-shadow);
+}
+
+.home-about-card h1 {
+  margin: 0.15rem 0 1rem;
+  font-size: clamp(1.75rem, 4vw, 2.4rem);
+}
+
+.home-about-card p {
+  max-width: 52rem;
+  line-height: 1.72;
+}
+
+.home-about-eyebrow {
+  margin: 0;
+  color: var(--weekend-accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.home-about-closing {
+  font-style: italic;
+  opacity: 0.88;
+}
+
+.home-about-contact {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.3rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  background: var(--weekend-accent);
+  color: #fff !important;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+#sidebar .nav-item a[href$='/write/'] {
+  margin-top: 0.55rem;
+  border: 1px solid rgba(55, 114, 255, 0.2);
+  border-radius: 0.75rem;
+  background: var(--weekend-accent-soft);
+  color: var(--sidebar-active-color);
+}
+
+#sidebar .nav-item a[href$='/write/'] i {
+  color: var(--weekend-accent);
+}
+
+.private-lock {
+  margin-right: 0.25rem;
+  color: #b47716;
+  font-size: 0.78em;
+}
+
+.private-post-card {
+  border-color: rgba(180, 119, 22, 0.3) !important;
+}
+
+.private-reader {
+  margin: 1.5rem 0;
+}
+
+.private-reader-panel {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 2rem;
+  border: 1px solid var(--main-border-color);
+  border-radius: 1rem;
+  background: var(--card-bg);
+  text-align: center;
+}
+
+.private-reader-icon {
+  color: #b47716;
+  font-size: 2rem;
+}
+
+.private-reader-form {
+  display: grid;
+  gap: 0.65rem;
+  max-width: 22rem;
+  margin: 1.25rem auto 0;
+  text-align: left;
+}
+
+.private-reader-form input,
+.private-reader-form button {
+  min-height: 2.75rem;
+  border: 1px solid var(--main-border-color);
+  border-radius: 0.65rem;
+}
+
+.private-reader-form input {
+  padding: 0.5rem 0.75rem;
+  background: var(--main-bg);
+  color: var(--text-color);
+}
+
+.private-reader-form button {
+  border-color: var(--weekend-accent);
+  background: var(--weekend-accent);
+  color: #fff;
+  font-weight: 700;
+}
+
+.private-reader-status {
+  min-height: 1.5rem;
+  margin: 0.8rem 0 0;
+  color: var(--weekend-danger);
+}
+
+.private-asset-placeholder {
+  display: grid;
+  min-height: 8rem;
+  place-items: center;
+  border: 1px dashed var(--main-border-color);
+  border-radius: 0.75rem;
+  color: var(--text-color);
+}
+
+.guestbook-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.guestbook-modal-overlay.is-visible {
+  display: flex;
+}
+
+.guestbook-modal-content {
+  width: min(100%, 25rem);
+  padding: 2rem;
+  border-radius: 0.8rem;
+  background: var(--card-bg);
+  color: var(--text-color);
+  text-align: center;
+}
+
+.guestbook-modal-content form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.guestbook-modal-content input {
+  min-width: 0;
+  flex: 1;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--main-border-color);
+  border-radius: 0.55rem;
+  background: var(--main-bg);
+  color: var(--text-color);
+}
+
+.guestbook-modal-content button {
+  border: 0;
+  border-radius: 0.55rem;
+  background: var(--weekend-accent);
+  color: #fff;
+  font-weight: 700;
+}
+
+@media (max-width: 576px) {
+  .guestbook-modal-content form {
+    flex-direction: column;
+  }
+}
+
+.blog-editor {
+  --editor-border: var(--main-border-color);
+  --editor-surface: var(--card-bg);
+  min-height: 30rem;
+}
+
+.editor-login {
+  max-width: 30rem;
+  margin: 2rem auto;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border: 1px solid var(--editor-border);
+  border-radius: 1rem;
+  background: var(--editor-surface);
+  box-shadow: var(--card-shadow);
+}
+
+.editor-login form,
+.editor-meta-grid label,
+.full-polish label {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.editor-login form {
+  gap: 0.65rem;
+}
+
+.editor-login input,
+.editor-login button,
+.editor-meta-grid input,
+.editor-meta-grid select,
+.category-control button,
+.button-secondary,
+.ai-assistant button,
+.full-polish button {
+  min-height: 2.7rem;
+  border: 1px solid var(--editor-border);
+  border-radius: 0.65rem;
+}
+
+.editor-login input,
+.editor-meta-grid input,
+.editor-meta-grid select {
+  min-width: 0;
+  padding: 0.55rem 0.75rem;
+  background: var(--main-bg);
+  color: var(--text-color);
+}
+
+.editor-login button,
+.publish-button,
+.full-polish > .ai-assistant-header button,
+#apply-polish {
+  border-color: var(--weekend-accent);
+  background: var(--weekend-accent);
+  color: #fff;
+  font-weight: 700;
+}
+
+.editor-kicker {
+  margin: 0 0 0.2rem;
+  color: var(--weekend-accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.editor-workspace-header,
+.editor-header-actions,
+.editor-options,
+.ai-assistant-header,
+.editor-publish-bar,
+.category-control {
+  display: flex;
+  gap: 0.65rem;
+  align-items: center;
+}
+
+.editor-workspace-header,
+.ai-assistant-header,
+.editor-publish-bar {
+  justify-content: space-between;
+}
+
+.editor-workspace-header h2,
+.ai-assistant-header h3 {
+  margin: 0;
+}
+
+.button-secondary,
+.category-control button,
+.ai-assistant .button-secondary {
+  padding: 0.45rem 0.75rem;
+  background: transparent;
+  color: var(--text-color);
+}
+
+.editor-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 1rem;
+}
+
+.category-control select {
+  flex: 1;
+}
+
+.editor-options {
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.toggle-label {
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--editor-border);
+  border-radius: 999px;
+  background: var(--editor-surface);
+  font-size: 0.9rem;
+}
+
+.field-note {
+  color: var(--text-color);
+  font-size: 0.82rem;
+  font-weight: 400;
+  opacity: 0.72;
+}
+
+.markdown-toolbar {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  padding: 0.55rem;
+  border: 1px solid var(--editor-border);
+  border-bottom: 0;
+  border-radius: 0.75rem 0.75rem 0 0;
+  background: var(--editor-surface);
+}
+
+.markdown-toolbar button {
+  width: 2.3rem;
+  height: 2.3rem;
+  border: 0;
+  border-radius: 0.45rem;
+  background: transparent;
+  color: var(--text-color);
+}
+
+.markdown-toolbar button:hover {
+  background: var(--weekend-accent-soft);
+  color: var(--weekend-accent);
+}
+
+.editor-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: 35rem;
+  border: 1px solid var(--editor-border);
+  border-radius: 0 0 0.75rem 0.75rem;
+  overflow: hidden;
+}
+
+.editor-pane {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-width: 0;
+  margin: 0;
+}
+
+.editor-pane > span {
+  padding: 0.55rem 0.8rem;
+  border-bottom: 1px solid var(--editor-border);
+  background: var(--editor-surface);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.editor-pane:first-child {
+  border-right: 1px solid var(--editor-border);
+}
+
+#post-body,
+#polish-result {
+  width: 100%;
+  min-height: 32rem;
+  resize: vertical;
+  border: 0;
+  outline: 0;
+  padding: 1rem;
+  background: var(--main-bg);
+  color: var(--text-color);
+  font: 0.95rem/1.65 ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.markdown-preview {
+  min-width: 0;
+  overflow: auto;
+  padding: 1rem;
+}
+
+.markdown-preview:empty::before {
+  content: 'Your rendered Markdown will appear here.';
+  color: var(--text-color);
+  opacity: 0.55;
+}
+
+.staged-assets,
+.ai-assistant,
+.full-polish {
+  margin-top: 1.25rem;
+  padding: 1.15rem;
+  border: 1px solid var(--editor-border);
+  border-radius: 0.8rem;
+  background: var(--editor-surface);
+}
+
+.staged-assets h3,
+.full-polish h3 {
+  margin-top: 0;
+}
+
+.staged-assets ul {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0;
+  list-style: none;
+}
+
+.staged-assets li {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ai-suggestions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.suggestion-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: stretch;
+  padding: 0.9rem;
+  border: 1px solid var(--editor-border);
+  border-radius: 0.7rem;
+  background: var(--main-bg);
+}
+
+.suggestion-card p {
+  flex: 1;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.suggestion-card button {
+  background: var(--weekend-accent-soft);
+  color: var(--weekend-accent);
+  font-weight: 700;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  margin: 0;
+  opacity: 0.68;
+}
+
+#polish-result-panel {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+#polish-result {
+  min-height: 18rem;
+  border: 1px solid var(--editor-border);
+  border-radius: 0.65rem;
+}
+
+.editor-publish-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  margin-top: 1.25rem;
+  padding: 0.9rem;
+  border: 1px solid var(--editor-border);
+  border-radius: 0.8rem;
+  background: color-mix(in srgb, var(--main-bg) 92%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+.editor-status {
+  margin: 0;
+  color: var(--text-color);
+}
+
+.editor-status.is-error {
+  color: var(--weekend-danger);
+}
+
+.editor-status.is-success {
+  color: var(--weekend-success);
+}
+
+.publish-button {
+  min-height: 2.9rem;
+  padding: 0.55rem 1rem;
+  border: 0;
+  border-radius: 0.7rem;
+}
+
+@media (max-width: 900px) {
+  .editor-split,
+  .ai-suggestions {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-pane:first-child {
+    border-right: 0;
+    border-bottom: 1px solid var(--editor-border);
+  }
+}
+
+@media (max-width: 650px) {
+  .editor-meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-workspace-header,
+  .editor-publish-bar,
+  .ai-assistant-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .editor-header-actions,
+  .category-control {
+    flex-wrap: wrap;
+  }
+}
