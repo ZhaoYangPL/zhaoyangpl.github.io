@@ -1,0 +1,6 @@
+- name: Daily
+  folder: Daily
+- name: Math
+  folder: Math
+- name: MoA
+  folder: MoA

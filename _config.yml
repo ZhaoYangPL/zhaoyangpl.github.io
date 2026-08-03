@@ -25,6 +25,10 @@ description: >- # used by seo meta and the atom feed
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
 url: "https://zhaoyangpl.github.io"
 
+# Public URL of the Vercel Functions project that powers the private editor.
+# Deploy `admin-api/` first, then replace this placeholder with its production URL.
+editor_api_url: "https://YOUR-VERCEL-PROJECT.vercel.app"
+
 github:
   username: ZhaoYangPL # change to your GitHub username
 
@@ -215,6 +219,7 @@ exclude:
   - purgecss.js
   - "*.config.js"
   - "package*.json"
+  - admin-api
 
 jekyll-archives:
   enabled: [categories, tags]

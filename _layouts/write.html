@@ -1,0 +1,145 @@
+---
+layout: page
+---
+
+<div id="blog-editor-app" class="blog-editor" data-api-url="{{ site.editor_api_url }}">
+  <section id="editor-login" class="editor-login" aria-labelledby="editor-login-title">
+    <p class="editor-kicker">Owner access</p>
+    <h2 id="editor-login-title">Sign in to write</h2>
+    <p>Your password and API keys are never stored in this static site.</p>
+    <form id="editor-login-form">
+      <label for="editor-password">Admin password</label>
+      <input id="editor-password" type="password" autocomplete="current-password" required>
+      <button type="submit">Sign in</button>
+    </form>
+    <p id="editor-login-status" class="editor-status" role="status"></p>
+  </section>
+
+  <section id="editor-workspace" class="editor-workspace d-none" aria-label="Blog editor">
+    <header class="editor-workspace-header">
+      <div>
+        <p class="editor-kicker">Markdown studio</p>
+        <h2>New Blog</h2>
+      </div>
+      <div class="editor-header-actions">
+        <button id="editor-discard" type="button" class="button-secondary">Discard draft</button>
+        <button id="editor-logout" type="button" class="button-secondary">Log out</button>
+      </div>
+    </header>
+
+    <div class="editor-meta-grid">
+      <label>
+        Title
+        <input id="post-title" type="text" maxlength="160" placeholder="A clear, memorable title" required>
+      </label>
+      <label>
+        URL slug
+        <input id="post-slug" type="text" maxlength="100" placeholder="my-new-post" required>
+      </label>
+      <label>
+        Blog category
+        <span class="category-control">
+          <select id="post-category" required></select>
+          <button id="new-category" type="button" class="button-secondary">New category</button>
+        </span>
+      </label>
+      <label>
+        Tags <span id="private-tags-note" class="field-note d-none">Hidden for private posts</span>
+        <input id="post-tags" type="text" placeholder="writing, reflection, study">
+      </label>
+    </div>
+
+    <div class="editor-options">
+      <label class="toggle-label">
+        <input id="post-private" type="checkbox">
+        <span>Private post</span>
+      </label>
+      <label id="private-ai-option" class="toggle-label d-none">
+        <input id="private-ai-consent" type="checkbox">
+        <span>Allow selected private text to be sent to DeepSeek</span>
+      </label>
+      <label class="toggle-label">
+        <input id="auto-ai" type="checkbox" checked>
+        <span>Automatic paragraph suggestions</span>
+      </label>
+    </div>
+
+    <div class="markdown-toolbar" role="toolbar" aria-label="Markdown formatting">
+      <button type="button" data-editor-action="heading" title="Heading">H</button>
+      <button type="button" data-editor-action="bold" title="Bold"><strong>B</strong></button>
+      <button type="button" data-editor-action="italic" title="Italic"><em>I</em></button>
+      <button type="button" data-editor-action="quote" title="Quote"><i class="fas fa-quote-left"></i></button>
+      <button type="button" data-editor-action="list" title="List"><i class="fas fa-list-ul"></i></button>
+      <button type="button" data-editor-action="code" title="Code"><i class="fas fa-code"></i></button>
+      <button type="button" data-editor-action="link" title="Link"><i class="fas fa-link"></i></button>
+      <button type="button" data-editor-action="image" title="Image"><i class="far fa-image"></i></button>
+      <input id="post-image-input" type="file" accept="image/jpeg,image/png,image/webp,image/gif" class="d-none">
+    </div>
+
+    <div class="editor-split">
+      <label class="editor-pane">
+        <span>Markdown</span>
+        <textarea id="post-body" spellcheck="true" placeholder="Start writing…"></textarea>
+      </label>
+      <section class="editor-pane" aria-labelledby="preview-title">
+        <span id="preview-title">Preview</span>
+        <div id="post-preview" class="content markdown-preview"></div>
+      </section>
+    </div>
+
+    <section id="staged-assets-panel" class="staged-assets d-none" aria-labelledby="staged-assets-title">
+      <h3 id="staged-assets-title">Staged images</h3>
+      <ul id="staged-assets-list"></ul>
+    </section>
+
+    <section class="ai-assistant" aria-labelledby="ai-assistant-title">
+      <div class="ai-assistant-header">
+        <div>
+          <p class="editor-kicker">DeepSeek writing partner</p>
+          <h3 id="ai-assistant-title">Current-window suggestions</h3>
+        </div>
+        <button id="refresh-suggestions" type="button" class="button-secondary">Suggest now</button>
+      </div>
+      <p class="field-note">Only the current selection or paragraph (up to 1,200 characters) is sent.</p>
+      <div id="ai-suggestions" class="ai-suggestions" aria-live="polite">
+        <p class="empty-state">Pause while writing, or select text and click “Suggest now”.</p>
+      </div>
+    </section>
+
+    <section class="full-polish" aria-labelledby="full-polish-title">
+      <div class="ai-assistant-header">
+        <div>
+          <h3 id="full-polish-title">Full-article polish</h3>
+          <p class="field-note">Creates a separate candidate. Your draft is unchanged until you apply it.</p>
+        </div>
+        <button id="polish-full" type="button">Polish full article</button>
+      </div>
+      <div id="polish-result-panel" class="d-none">
+        <label>
+          Polished Markdown
+          <textarea id="polish-result" readonly></textarea>
+        </label>
+        <div>
+          <strong>Change summary</strong>
+          <ul id="polish-summary"></ul>
+        </div>
+        <button id="apply-polish" type="button">Apply polished version</button>
+      </div>
+    </section>
+
+    <footer class="editor-publish-bar">
+      <p id="editor-status" class="editor-status" role="status">Draft autosave is ready.</p>
+      <button id="publish-post" type="button" class="publish-button">
+        <i class="fas fa-paper-plane"></i>
+        Publish to main
+      </button>
+    </footer>
+  </section>
+</div>
+
+<script id="blog-category-data" type="application/json">
+  {{ site.data.blog_categories | jsonify }}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js" defer></script>
+<script src="{{ '/assets/js/blog-editor.js' | relative_url }}" defer></script>

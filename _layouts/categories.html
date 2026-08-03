@@ -1,0 +1,91 @@
+---
+layout: page
+---
+
+{% include lang.html %}
+
+{% assign blog_posts = site.categories['Blog'] %}
+{% assign blog_count = blog_posts | size %}
+
+<div class="card categories">
+  <div class="card-header d-flex justify-content-between hide-border-bottom">
+    <span class="ms-2">
+      <i class="far fa-folder-open fa-fw"></i>
+      {% if blog_count > 0 %}
+        <a href="{{ '/categories/blog/' | relative_url }}" class="mx-2">Blog</a>
+      {% else %}
+        <span class="mx-2">Blog</span>
+      {% endif %}
+      <span class="text-muted small font-weight-light">
+        {{ site.data.blog_categories | size }} categories, {{ blog_count }} posts
+      </span>
+    </span>
+  </div>
+  <div class="collapse show">
+    <ul class="list-group">
+      {% for blog_category in site.data.blog_categories %}
+        {% assign post_count = 0 %}
+        {% for post in site.posts %}
+          {% if post.categories[0] == 'Blog' and post.categories[1] == blog_category.name %}
+            {% assign post_count = post_count | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+        <li class="list-group-item">
+          <i class="far fa-folder fa-fw"></i>
+          {% if post_count > 0 %}
+            {% capture category_url %}/categories/{{ blog_category.name | slugify | url_encode }}/{% endcapture %}
+            <a href="{{ category_url | relative_url }}" class="mx-2">{{ blog_category.name }}</a>
+          {% else %}
+            <span class="mx-2 text-muted">{{ blog_category.name }}</span>
+          {% endif %}
+          <span class="text-muted small font-weight-light">{{ post_count }} posts</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% assign sort_categories = site.categories | sort %}
+{% for category in sort_categories %}
+  {% assign category_name = category | first %}
+  {% assign posts_of_category = category | last %}
+  {% assign first_post = posts_of_category | first %}
+  {% if category_name != 'Blog' and category_name == first_post.categories[0] %}
+    {% assign sub_categories = '' | split: '' %}
+    {% for post in posts_of_category %}
+      {% assign second_category = post.categories[1] %}
+      {% if second_category %}
+        {% unless sub_categories contains second_category %}
+          {% assign sub_categories = sub_categories | push: second_category %}
+        {% endunless %}
+      {% endif %}
+    {% endfor %}
+    {% assign sub_categories = sub_categories | sort %}
+    <div class="card categories">
+      <div class="card-header d-flex justify-content-between hide-border-bottom">
+        <span class="ms-2">
+          <i class="far fa-folder{% if sub_categories.size > 0 %}-open{% endif %} fa-fw"></i>
+          {% capture top_url %}/categories/{{ category_name | slugify | url_encode }}/{% endcapture %}
+          <a href="{{ top_url | relative_url }}" class="mx-2">{{ category_name }}</a>
+          <span class="text-muted small font-weight-light">
+            {{ sub_categories | size }} categories, {{ posts_of_category | size }} posts
+          </span>
+        </span>
+      </div>
+      {% if sub_categories.size > 0 %}
+        <div class="collapse show">
+          <ul class="list-group">
+            {% for sub_category in sub_categories %}
+              <li class="list-group-item">
+                <i class="far fa-folder fa-fw"></i>
+                {% capture sub_url %}/categories/{{ sub_category | slugify | url_encode }}/{% endcapture %}
+                <a href="{{ sub_url | relative_url }}" class="mx-2">{{ sub_category }}</a>
+                <span class="text-muted small font-weight-light">{{ site.categories[sub_category] | size }} posts</span>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endfor %}

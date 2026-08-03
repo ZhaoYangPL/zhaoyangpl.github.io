@@ -1,0 +1,24 @@
+<section
+  id="private-post"
+  class="private-reader"
+  data-api-url="{{ site.editor_api_url }}"
+  aria-labelledby="private-reader-title"
+>
+  <div id="private-reader-locked" class="private-reader-panel">
+    <i class="fas fa-lock private-reader-icon" aria-hidden="true"></i>
+    <h2 id="private-reader-title">Private post</h2>
+    <p>This article is encrypted and can only be opened by the site owner.</p>
+    <form id="private-reader-login" class="private-reader-form">
+      <label for="private-reader-password">Admin password</label>
+      <input id="private-reader-password" type="password" autocomplete="current-password" required>
+      <button type="submit">Unlock</button>
+    </form>
+    <p id="private-reader-status" class="private-reader-status" role="status"></p>
+  </div>
+  <div id="private-reader-content" class="private-reader-content d-none"></div>
+</section>
+
+<script id="private-post-payload" type="application/json">{{ page.encrypted_payload | jsonify }}</script>
+<script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js" defer></script>
+<script src="{{ '/assets/js/private-post.js' | relative_url }}" defer></script>
