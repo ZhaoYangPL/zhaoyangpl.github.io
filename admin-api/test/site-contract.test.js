@@ -37,3 +37,17 @@ test('editor and private reader always sanitize rendered Markdown', async () => 
   assert.match(privateReader, /DOMPurify\.sanitize\(marked\.parse/);
   assert.match(editor, /maxSuggestionChars = 1200/);
 });
+
+test('home and search descriptions use a privacy-aware Chirpy summary', async () => {
+  const description = await readFile(path.join(root, '_includes/post-description.html'), 'utf8');
+  const home = await readFile(path.join(root, '_layouts/home.html'), 'utf8');
+  const search = await readFile(path.join(root, 'assets/js/data/search.json'), 'utf8');
+
+  assert.match(description, /if post\.private/);
+  assert.match(description, /Private post — sign in to read\./);
+  assert.match(description, /include post-summary\.html/);
+  assert.match(description, /full_text=true/);
+  assert.match(description, /description \| jsonify/);
+  assert.match(home, /include post-description\.html/);
+  assert.match(search, /include post-description\.html json=true/);
+});

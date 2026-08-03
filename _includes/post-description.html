@@ -1,0 +1,25 @@
+{%- comment -%}
+  Provide one privacy-aware description source for home cards and search JSON.
+
+  Arguments:
+    json: When true, return a JSON string containing the full searchable text.
+{%- endcomment -%}
+
+{%- if post.private -%}
+  {%- assign description = 'Private post — sign in to read.' -%}
+{%- else -%}
+  {%- capture description -%}
+    {%- if include.json -%}
+      {%- include post-summary.html full_text=true -%}
+    {%- else -%}
+      {%- include post-summary.html -%}
+    {%- endif -%}
+  {%- endcapture -%}
+{%- endif -%}
+
+{%- assign description = description | strip -%}
+{%- if include.json -%}
+  {{- description | jsonify -}}
+{%- else -%}
+  {{- description -}}
+{%- endif -%}
