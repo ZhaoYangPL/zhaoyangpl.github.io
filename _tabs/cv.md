@@ -7,9 +7,6 @@ title: CV
 
 # CV
 
-<!-- Replace the path below with a public, phone-free English CV if you want to link one. -->
-[Download CV (PDF)](/assets/file/CV.pdf)
-
 ## Education
 
 - **B.S. in Information Management and Statistics**, Zhejiang University, 2024 – present
