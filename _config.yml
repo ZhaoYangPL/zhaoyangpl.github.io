@@ -19,7 +19,7 @@ title: Wenkai Chen # the main title
 tagline: Undergraduate Researcher · Zhejiang University # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
-  Undergraduate researcher at Zhejiang University interested in machine learning, AI video evaluation, and quantitative investment.
+  Undergraduate researcher at Zhejiang University interested in machine learning, molecular generation, and causal inference.
 
 # Fill in the protocol & hostname for your site.
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
@@ -141,7 +141,7 @@ assets:
     env: # [development | production]
 
 pwa:
-  enabled: true # The option for PWA feature (installable)
+  enabled: false # The option for PWA feature (installable)
   cache:
     enabled: true # The option for PWA offline cache
     # Paths defined here will be excluded from the PWA cache.
