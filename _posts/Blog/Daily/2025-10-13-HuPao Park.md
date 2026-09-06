@@ -1,6 +1,7 @@
 ---
 title: Dancing today, and make up for yesterday
 date: 2025-10-13 10:05:00 +0800
+hidden: true
 categories: [Blog, Daily]
 tags: [Park,Dancing,Quant]
 ---

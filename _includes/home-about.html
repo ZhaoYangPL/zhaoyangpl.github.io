@@ -1,20 +1,33 @@
 <section class="home-about-card" aria-labelledby="home-about-title">
-  <p class="home-about-eyebrow">About me</p>
-  <h1 id="home-about-title">Hi, I'm Weekend Chen.</h1>
+  <h1 id="home-about-title">Wenkai Chen</h1>
+  <p class="home-about-role">Undergraduate Researcher &middot; Zhejiang University</p>
+
   <p>
-    I'm an undergraduate at Zhejiang University, majoring in Information Management and Statistics. My interests
-    include machine learning, deep learning, and reinforcement learning, and I am exploring AI-based video evaluation
-    and deep-learning approaches to quantitative investment.
+    I am an undergraduate at
+    <a href="https://www.zju.edu.cn/english/" target="_blank" rel="noopener">Zhejiang University</a>,
+    majoring in Information Management and Statistics. My research interests lie in machine learning,
+    deep learning, and reinforcement learning, with a current focus on AI for science (molecular generation)
+    and causal inference.
   </p>
   <p>
-    Beyond study and research, I enjoy travelling, cycling, billiards, badminton, climbing, singing, and Latin dance.
-    This site is where I share notes, ideas, and moments from daily life.
+    I aim to build learning systems that understand and reason about structured, sequential, and visual data.
   </p>
-  <p class="home-about-closing">
-    Although I may not know your name, I greet you in the spirit of spring and sunshine—and wish you well.
-  </p>
-  <a class="home-about-contact" href="mailto:{{ site.social.email }}">
-    <i class="far fa-envelope" aria-hidden="true"></i>
-    Get in touch
-  </a>
+
+  <ul class="home-about-links">
+    <li>
+      <a href="mailto:{{ site.social.email }}">
+        <i class="far fa-envelope" aria-hidden="true"></i> Email
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/{{ site.github.username }}" target="_blank" rel="noopener">
+        <i class="fab fa-github" aria-hidden="true"></i> GitHub
+      </a>
+    </li>
+    <li>
+      <a href="{{ '/cv/' | relative_url }}">
+        <i class="far fa-file-pdf" aria-hidden="true"></i> CV
+      </a>
+    </li>
+  </ul>
 </section>
