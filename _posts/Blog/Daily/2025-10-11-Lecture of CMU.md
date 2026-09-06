@@ -2,8 +2,6 @@
 title: Lecture from CMU!
 date: 2025-10-11 12:07:00 +0800
 hidden: true
-categories: [Blog, Daily]
-tags: [daily]
 ---
 
 ## Lecture from CMU!

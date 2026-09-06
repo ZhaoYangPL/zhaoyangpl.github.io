@@ -1,8 +1,6 @@
 ---
 title: "Selection of Wrong Questions of Data Struct(CourseNotes for Study & Research Only)"
 date: 2025-10-15 20:35:00 +0800
-categories: [Notes,Data Struct]  
-tags: [Data Struct,CWQ]
 ---
 
 对一个具有n个元素的线性表，建立其单链表的时间复杂度为（）。

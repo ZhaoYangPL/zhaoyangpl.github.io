@@ -4,7 +4,7 @@ layout: page
 
 {% include lang.html %}
 
-{% assign notes = site.categories['Notes'] | sort: 'date' | reverse %}
+{% assign notes = site.posts | where_exp: 'post', 'post.path contains "/Notes/"' | sort: 'date' | reverse %}
 
 <div id="notes">
   <h1 class="ps-lg-2">

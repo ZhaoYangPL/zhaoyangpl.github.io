@@ -2,8 +2,6 @@
 title: Literature Sentences occurred!
 date: 2025-10-10 16:05:00 +0800
 hidden: true
-categories: [Blog, Daily]
-tags: [Haruki Murakami]
 ---
 ## 最伟大的发明top10
 

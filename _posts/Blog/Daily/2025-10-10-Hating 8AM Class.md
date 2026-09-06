@@ -2,8 +2,6 @@
 title: Hating 8AM Calss!
 date: 2025-10-10 10:46:00 +0800
 hidden: true
-categories: [Blog, Daily]
-tags: [daily]
 ---
 
 ## Killing me to wake up in time !

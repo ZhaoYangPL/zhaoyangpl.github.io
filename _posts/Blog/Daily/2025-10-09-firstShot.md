@@ -2,8 +2,6 @@
 title: This is my first Blog!
 date: 2025-10-09 14:30:00 +0800
 hidden: true
-categories: [Blog, Daily]
-tags: [new start, jekyll]
 ---
 
 ## This is my first Blog !

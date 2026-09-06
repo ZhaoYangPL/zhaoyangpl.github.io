@@ -221,7 +221,7 @@ exclude:
   - admin-api
 
 jekyll-archives:
-  enabled: [categories, tags]
+  enabled: []
   layouts:
     category: category
     tag: tag

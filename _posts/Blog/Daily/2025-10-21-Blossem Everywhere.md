@@ -2,8 +2,6 @@
 title: Blossem Everywhere
 date: 2025-10-21 23:50:00 +0800
 hidden: true
-categories: [Blog, Daily]
-tags: [Daily]
 ---
 
 ![](/assets/img/Challenge.png)

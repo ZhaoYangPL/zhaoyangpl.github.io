@@ -2,8 +2,6 @@
 title: "Quant Notes_COnfusions(CourseNotes for Study & Research Only)"
 subtitle: "Some Confusions"
 date: 2025-10-15 12:02:00 +0800
-categories: [Notes,Quant]  
-tags: [Quant,Notes]
 ---
 
 ### 為什麼 Position 的經常變化會不太好？ (高換手率問題)
