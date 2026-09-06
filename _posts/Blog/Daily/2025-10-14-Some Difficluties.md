@@ -1,6 +1,7 @@
 ---
 title: Facing some difficulties
 date: 2025-10-14 17:08:00 +0800
+hidden: true
 categories: [Blog, Daily]
 tags: [Difficulty]
 ---

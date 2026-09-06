@@ -1,6 +1,7 @@
 ---
 title:  "New Fans, New Partner, and Spider-Sense"
 date:   2025-10-23 21:33:00 +0800
+hidden: true
 categories: [Blog, Daily]
 tags: [Daily]
 ---

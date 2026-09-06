@@ -4,7 +4,8 @@ swcache: true
 ---
 
 [
-  {% for post in site.posts %}
+  {% assign search_posts = site.posts | where_exp: 'item', 'item.hidden != true' %}
+  {% for post in search_posts %}
   {
     "title": {% if post.private %}{{ post.title | prepend: '🔒 ' | jsonify }}{% else %}{{ post.title | jsonify }}{% endif %},
     "url": {{ post.url | relative_url | jsonify }},

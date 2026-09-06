@@ -20,15 +20,20 @@
   padding: clamp(1.4rem, 3vw, 2.25rem);
   border: 1px solid var(--main-border-color);
   border-radius: 1rem;
-  background:
-    radial-gradient(circle at 100% 0, var(--weekend-accent-soft), transparent 42%),
-    var(--card-bg);
+  background: var(--card-bg);
   box-shadow: var(--card-shadow);
 }
 
 .home-about-card h1 {
-  margin: 0.15rem 0 1rem;
-  font-size: clamp(1.75rem, 4vw, 2.4rem);
+  margin: 0 0 0.25rem;
+  font-size: clamp(1.9rem, 4vw, 2.5rem);
+}
+
+.home-about-role {
+  margin: 0 0 1.25rem;
+  color: var(--text-color);
+  opacity: 0.75;
+  font-size: 1.05rem;
 }
 
 .home-about-card p {
@@ -36,43 +41,19 @@
   line-height: 1.72;
 }
 
-.home-about-eyebrow {
-  margin: 0;
-  color: var(--weekend-accent);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+.home-about-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-weight: 500;
 }
 
-.home-about-closing {
-  font-style: italic;
-  opacity: 0.88;
-}
-
-.home-about-contact {
-  display: inline-flex;
-  gap: 0.5rem;
-  align-items: center;
-  margin-top: 0.3rem;
-  padding: 0.55rem 0.9rem;
-  border-radius: 999px;
-  background: var(--weekend-accent);
-  color: #fff !important;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-#sidebar .nav-item a[href$='/write/'] {
-  margin-top: 0.55rem;
-  border: 1px solid rgba(55, 114, 255, 0.2);
-  border-radius: 0.75rem;
-  background: var(--weekend-accent-soft);
-  color: var(--sidebar-active-color);
-}
-
-#sidebar .nav-item a[href$='/write/'] i {
-  color: var(--weekend-accent);
+.home-about-links i {
+  margin-right: 0.35rem;
+  opacity: 0.7;
 }
 
 .private-lock {
@@ -145,59 +126,6 @@
   border: 1px dashed var(--main-border-color);
   border-radius: 0.75rem;
   color: var(--text-color);
-}
-
-.guestbook-modal-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9998;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  background: rgba(0, 0, 0, 0.7);
-}
-
-.guestbook-modal-overlay.is-visible {
-  display: flex;
-}
-
-.guestbook-modal-content {
-  width: min(100%, 25rem);
-  padding: 2rem;
-  border-radius: 0.8rem;
-  background: var(--card-bg);
-  color: var(--text-color);
-  text-align: center;
-}
-
-.guestbook-modal-content form {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.guestbook-modal-content input {
-  min-width: 0;
-  flex: 1;
-  padding: 0.65rem 0.8rem;
-  border: 1px solid var(--main-border-color);
-  border-radius: 0.55rem;
-  background: var(--main-bg);
-  color: var(--text-color);
-}
-
-.guestbook-modal-content button {
-  border: 0;
-  border-radius: 0.55rem;
-  background: var(--weekend-accent);
-  color: #fff;
-  font-weight: 700;
-}
-
-@media (max-width: 576px) {
-  .guestbook-modal-content form {
-    flex-direction: column;
-  }
 }
 
 .blog-editor {

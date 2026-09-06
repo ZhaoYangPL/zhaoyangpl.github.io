@@ -1,6 +1,7 @@
 ---
 title: Critical Thoughts
 date: 2025-10-18 15:25:00 +0800
+hidden: true
 categories: [Blog, Daily]
 tags: [Introspect]
 ---
