@@ -7,11 +7,6 @@ layout: page
 {% assign notes = site.posts | where_exp: 'post', 'post.path contains "/Notes/"' | sort: 'date' | reverse %}
 
 <div id="notes">
-  <h1 class="ps-lg-2">
-    <i class="fas fa-book fa-fw text-muted"></i>
-    {{ page.title }}
-    <span class="lead text-muted ps-2">{{ notes | size }}</span>
-  </h1>
   <ul class="content ps-0">
     {% for post in notes %}
       <li class="d-flex justify-content-between px-md-3">

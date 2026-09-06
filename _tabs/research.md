@@ -5,8 +5,6 @@ order: 1
 title: Research
 ---
 
-# Research
-
 ## Research Interests
 
 - LLM Post-Training & Reinforcement Learning

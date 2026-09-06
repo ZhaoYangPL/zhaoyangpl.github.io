@@ -41,6 +41,16 @@
   line-height: 1.72;
 }
 
+.home-about-card h2 {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1.15rem;
+}
+
+.home-about-card ul:not(.home-about-links) {
+  margin: 0 0 0.25rem;
+  padding-left: 1.25rem;
+}
+
 .home-about-links {
   display: flex;
   flex-wrap: wrap;
