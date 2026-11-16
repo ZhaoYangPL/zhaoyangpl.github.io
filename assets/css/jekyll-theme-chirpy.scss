@@ -15,6 +15,19 @@
   --weekend-danger: #c33c54;
 }
 
+#sidebar #avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  transform: scale(1.35);
+  transform-origin: 75% 25%;
+}
+
+#sidebar #avatar img:hover {
+  transform: scale(1.4);
+}
+
 .home-about-card {
   margin: 0 0 2rem;
   padding: clamp(1.4rem, 3vw, 2.25rem);
