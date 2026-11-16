@@ -176,6 +176,9 @@ collections:
   tabs:
     output: true
     sort_by: order
+  notes:
+    output: true
+    permalink: /notes/:name/
 
 defaults:
   - scope:
@@ -222,9 +225,8 @@ exclude:
   - "*.config.js"
   - "package*.json"
   - admin-api
-  # Keep historical course notes in the repository without publishing them.
+  # New materials use the notes collection; historical course posts stay hidden.
   - _posts/Notes
-  - _tabs/notes.md
 
 jekyll-archives:
   enabled: []

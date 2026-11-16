@@ -1,0 +1,24 @@
+{% assign timeline_entries = include.entries | sort: 'date' %}
+<ol class="research-timeline" aria-label="{{ include.label | escape }}">
+  {% for entry in timeline_entries %}
+    <li class="research-timeline-entry {% if entry.type == 'project' %}is-project{% else %}is-talk{% endif %}">
+      <div class="research-timeline-meta">
+        <time datetime="{{ entry.date | escape }}">{% if entry.type == 'project' %}{{ entry.date | date: '%b %Y' }}{% else %}{{ entry.date | date: '%b %-d, %Y' }}{% endif %}</time>
+        <span class="research-entry-type">{% if entry.type == 'project' %}Project started{% else %}Talk{% endif %}</span>
+      </div>
+      {% if entry.type == 'project' %}
+        <h3><a href="{{ '/research/' | relative_url }}#{{ entry.id | escape }}">{{ entry.title | escape }}</a></h3>
+        <p>{{ entry.timeline_summary | escape }}</p>
+      {% else %}
+        <h3>{{ entry.title | escape }}</h3>
+        {% if entry.event %}<p class="research-affiliation">{{ entry.event | escape }}</p>{% endif %}
+        {% if entry.description %}<p>{{ entry.description | escape }}</p>{% endif %}
+        {% assign related_project = site.data.research.projects | where: 'id', entry.project | first %}
+        {% if related_project %}
+          <p class="research-related">Related project: <a href="{{ '/research/' | relative_url }}#{{ related_project.id | escape }}">{{ related_project.title | escape }}</a></p>
+        {% endif %}
+        {% include research-materials.html talk=entry %}
+      {% endif %}
+    </li>
+  {% endfor %}
+</ol>

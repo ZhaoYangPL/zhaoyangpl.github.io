@@ -4,16 +4,24 @@ layout: page
 
 {% include lang.html %}
 
-{% assign notes = site.posts | where_exp: 'post', 'post.path contains "/Notes/"' | sort: 'date' | reverse %}
+{% assign notes = site.notes | where_exp: 'note', 'note.hidden != true' | sort: 'date' | reverse %}
 
 <div id="notes">
-  <ul class="content ps-0">
-    {% for post in notes %}
+  {% if notes.size > 0 %}
+    <ul class="content ps-0">
+    {% for note in notes %}
       <li class="d-flex justify-content-between px-md-3">
-        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <a href="{{ note.url | relative_url }}">{{ note.title | escape }}</a>
         <span class="dash flex-grow-1"></span>
-        {% include datetime.html date=post.date class='text-muted small text-nowrap' lang=lang %}
+        {% if note.date %}
+          {% include datetime.html date=note.date class='text-muted small text-nowrap' lang=lang %}
+        {% endif %}
       </li>
     {% endfor %}
-  </ul>
+    </ul>
+  {% else %}
+    <div class="content-placeholder">
+      <p>No notes posted yet. I&rsquo;ll be adding new notes and materials here soon.</p>
+    </div>
+  {% endif %}
 </div>

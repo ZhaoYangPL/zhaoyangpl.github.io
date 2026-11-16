@@ -185,11 +185,16 @@ html[data-mode='dark'] .research-page {
   outline-offset: 4px;
 }
 
-.research-talks-empty {
-  padding: 0.8rem 1rem;
-  border-left: 2px solid var(--research-line);
-  color: var(--text-muted-color);
-  font-size: 0.9rem;
+.content-placeholder {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border: 1px dashed var(--main-border-color);
+  border-radius: 0.65rem;
+  background: var(--card-bg);
+}
+
+.content-placeholder p {
+  margin: 0;
 }
 
 .research-page .research-timeline {

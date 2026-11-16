@@ -6,9 +6,9 @@ Personal website and Markdown blog built with Jekyll, Chirpy, GitHub Pages, and 
 
 - Public and private Blog posts live under `_posts/Blog/<Category>/`.
 - The visible Blog taxonomy is stored in `_data/blog_categories.yml`.
-- Historical course notes remain under `_posts/Notes/` but are excluded from the published site, along with the Notes tab.
+- Historical course notes remain under `_posts/Notes/` but are excluded from the published site. New materials belong in the `_notes/` collection and appear on the Notes page.
 - Research interests and project descriptions live in `_data/research.yml`.
-- Talks and their materials live in `_data/talks.yml` and appear alongside projects on the research timeline.
+- Talks and their materials live in `_data/talks.yml`, have their own Talks page, and also appear alongside projects on the research timeline.
 - Pushing `main` triggers `.github/workflows/pages-deploy.yml` and publishes the static site.
 
 ## Web editor
@@ -52,6 +52,22 @@ To add a talk, replace the empty `[]` in `_data/talks.yml` with a list, or appen
 ```
 
 All material fields are optional: only supplied links appear. A hosted recording is usually preferable for large videos. Local paths must start with `/`; external links must be full URLs. The example is a template, not a published talk.
+
+## Notes and materials
+
+To publish a new note, create a Markdown file such as `_notes/your-note.md`:
+
+```markdown
+---
+layout: page
+title: "Your note title"
+date: "2026-11-16"
+---
+
+Your note, with links to any related materials.
+```
+
+It will appear at `/notes/your-note/` and on the Notes page. Add `hidden: true` to omit a note from the listing. Keep old course notes in `_posts/Notes/`; they remain excluded. Talks and Notes show an empty state until real content is added.
 
 ## One-page CV
 

@@ -4,7 +4,7 @@ swcache: true
 ---
 
 [
-  {% assign search_posts = site.posts | where_exp: 'item', 'item.hidden != true' %}
+  {% assign search_posts = site.posts | concat: site.notes | where_exp: 'item', 'item.hidden != true' %}
   {% for post in search_posts %}
   {
     "title": {% if post.private %}{{ post.title | prepend: '🔒 ' | jsonify }}{% else %}{{ post.title | jsonify }}{% endif %},
