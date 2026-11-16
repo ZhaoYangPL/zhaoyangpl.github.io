@@ -25,6 +25,9 @@ description: >- # used by seo meta and the atom feed
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
 url: "https://zhaoyangpl.github.io"
 
+# Public, compiled one-page CV.
+cv_url: /assets/file/Wenkai_Chen_CV.pdf
+
 # Public URL of the Vercel Functions project that powers the private editor.
 # Deploy `admin-api/` first, then replace this placeholder with its production URL.
 editor_api_url: "https://zhaoyangpl-admin-api.vercel.app"
@@ -101,7 +104,7 @@ theme_mode: light # [light | dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: /assets/img/profile.jpg
+avatar: /assets/img/profile02.jpg
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
@@ -219,6 +222,9 @@ exclude:
   - "*.config.js"
   - "package*.json"
   - admin-api
+  # Keep historical course notes in the repository without publishing them.
+  - _posts/Notes
+  - _tabs/notes.md
 
 jekyll-archives:
   enabled: []

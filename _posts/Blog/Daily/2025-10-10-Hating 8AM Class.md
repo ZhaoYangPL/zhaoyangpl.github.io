@@ -8,9 +8,9 @@ hidden: true
 
 Actually, waking up at 8am is not the worst, but the place. Our classroom is in SOM(school of management), which, I bet, must be 2 km away from my residence. Torturous!
 
-Class in the morning is 'Database', not so difficult, thus I have time to write my diary. And below is my [homework](/assets/file/习题+上机作业3A%202025.docx).
+Class in the morning is 'Database', not so difficult, thus I have time to write my diary.
 
-Well, it may be a good choice to review the class in the morning. [Notes]({% post_url 2025-10-10-SQLServerNotes %})
+Well, it may be a good choice to review the class in the morning.
 
 Class in the afternoon is quite weird, for our CN teacher talked about nothing. Perhaps revise the development of DL.
 

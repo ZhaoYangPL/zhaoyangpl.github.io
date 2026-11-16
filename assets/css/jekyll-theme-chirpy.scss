@@ -66,6 +66,220 @@
   opacity: 0.7;
 }
 
+.research-page {
+  --research-accent: #2861c2;
+  --research-line: #a8bfdf;
+  line-height: 1.7;
+}
+
+html[data-mode='dark'] .research-page {
+  --research-accent: #94baff;
+  --research-line: #526b8d;
+}
+
+.research-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.4rem;
+  margin: 0 0 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--main-border-color);
+  font-size: 0.9rem;
+}
+
+.research-page h2,
+.research-project h3 {
+  scroll-margin-top: 5rem;
+}
+
+.research-page h2 {
+  margin: 2.5rem 0 1.25rem;
+}
+
+.research-page h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.research-page .research-interests {
+  display: grid;
+  gap: 1.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.research-interests > li {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0.8rem;
+}
+
+.research-interest-number {
+  padding-top: 0.1rem;
+  color: var(--research-accent);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.research-interests p {
+  margin: 0;
+}
+
+.research-project {
+  margin: 0 0 1.25rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  border: 1px solid var(--main-border-color);
+  border-radius: 0.8rem;
+  background: var(--card-bg);
+}
+
+.research-meta,
+.research-timeline-meta,
+.research-affiliation,
+.research-related {
+  font-size: 0.85rem;
+  color: var(--text-muted-color);
+}
+
+.research-project .research-meta {
+  margin: 0 0 0.6rem;
+}
+
+.research-meta > span {
+  margin: 0 0.3rem;
+}
+
+.research-project ul {
+  margin: 1rem 0;
+  padding-left: 1.2rem;
+}
+
+.research-project li + li {
+  margin-top: 0.5rem;
+}
+
+.research-page .research-resource {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--main-border-color);
+  border-radius: 0.45rem;
+  color: var(--research-accent);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.research-page .research-resource:hover {
+  border-color: var(--research-accent);
+  background: var(--weekend-accent-soft);
+}
+
+.research-page a:focus-visible {
+  outline: 2px solid var(--research-accent);
+  outline-offset: 4px;
+}
+
+.research-talks-empty {
+  padding: 0.8rem 1rem;
+  border-left: 2px solid var(--research-line);
+  color: var(--text-muted-color);
+  font-size: 0.9rem;
+}
+
+.research-page .research-timeline {
+  position: relative;
+  margin: 2rem 0 0 0.55rem;
+  padding: 0 0 1.5rem 1.75rem;
+  border-left: 2px solid var(--research-line);
+  list-style: none;
+}
+
+.research-timeline::after {
+  position: absolute;
+  bottom: -1px;
+  left: -5px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--research-line);
+  border-bottom: 2px solid var(--research-line);
+  content: '';
+  transform: rotate(45deg);
+}
+
+.research-timeline-entry {
+  position: relative;
+  padding: 0 0 2rem;
+  overflow-wrap: anywhere;
+}
+
+.research-timeline-entry:last-child {
+  padding-bottom: 0.5rem;
+}
+
+.research-timeline-entry::before {
+  position: absolute;
+  top: 0.5rem;
+  left: calc(-1.75rem - 6px);
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--research-accent);
+  border-radius: 50%;
+  background: var(--main-bg);
+  content: '';
+}
+
+.research-timeline-entry.is-talk::before {
+  background: var(--research-accent);
+}
+
+.research-timeline-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.research-entry-type {
+  color: var(--research-accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.research-timeline-entry p {
+  margin-bottom: 0.75rem;
+}
+
+.research-page .research-materials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.research-recording {
+  display: block;
+  width: 100%;
+  max-height: 30rem;
+  margin-top: 1rem;
+  border-radius: 0.6rem;
+  background: #151515;
+}
+
+.research-timeline-tail {
+  margin: 0.75rem 0 0 2.4rem;
+  color: var(--text-muted-color);
+  font-size: 0.85rem;
+}
+
 .private-lock {
   margin-right: 0.25rem;
   color: #b47716;

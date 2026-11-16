@@ -1,0 +1,76 @@
+<div class="research-page">
+  <nav class="research-nav" aria-label="Research sections">
+    <a href="#research-interests">Research Interests</a>
+    <a href="#projects">Projects</a>
+    <a href="#talks">Talks</a>
+  </nav>
+
+  <section aria-labelledby="research-interests">
+    <h2 id="research-interests">Research Interests</h2>
+    <ol class="research-interests">
+      {% for interest in site.data.research.interests %}
+        <li>
+          <span class="research-interest-number" aria-hidden="true">0{{ forloop.index }}</span>
+          <div>
+            <h3>{{ interest.title | escape }}</h3>
+            <p>{{ interest.description | escape }}</p>
+          </div>
+        </li>
+      {% endfor %}
+    </ol>
+  </section>
+
+  <section aria-labelledby="projects">
+    <h2 id="projects">Projects</h2>
+    {% assign projects = site.data.research.projects | sort: 'date' | reverse %}
+    {% for project in projects %}
+      <article class="research-project" aria-labelledby="{{ project.id | escape }}">
+        <p class="research-meta">{{ project.period | escape }} <span aria-hidden="true">&middot;</span> {{ project.role | escape }}</p>
+        <h3 id="{{ project.id | escape }}">{{ project.title | escape }}</h3>
+        <p class="research-affiliation">{{ project.institution | escape }}<br>Advisor: {{ project.advisor | escape }}</p>
+        <ul>
+          {% for point in project.points %}
+            <li>{{ point | escape }}</li>
+          {% endfor %}
+        </ul>
+        {% if project.code %}
+          <a class="research-resource" href="{{ project.code | escape }}">View code <span aria-hidden="true">&nearr;</span></a>
+        {% endif %}
+      </article>
+    {% endfor %}
+  </section>
+
+  <section aria-labelledby="talks">
+    <h2 id="talks">Talks</h2>
+    <p>Follow my research over time, from project beginnings to the talks and discussions they lead to.</p>
+    {% if site.data.talks.size == 0 %}
+      <p class="research-talks-empty">As I give research talks, I will share recordings, slides, and related notes here, alongside the projects they explore.</p>
+    {% endif %}
+
+    {% assign timeline = site.data.research.projects | concat: site.data.talks | sort: 'date' %}
+    <ol class="research-timeline" aria-label="Projects and talks in chronological order">
+      {% for entry in timeline %}
+        <li class="research-timeline-entry {% if entry.type == 'project' %}is-project{% else %}is-talk{% endif %}">
+          <div class="research-timeline-meta">
+            <time datetime="{{ entry.date | escape }}">{% if entry.type == 'project' %}{{ entry.date | date: '%b %Y' }}{% else %}{{ entry.date | date: '%b %-d, %Y' }}{% endif %}</time>
+            <span class="research-entry-type">{% if entry.type == 'project' %}Project started{% else %}Talk{% endif %}</span>
+          </div>
+          {% if entry.type == 'project' %}
+            <h3><a href="#{{ entry.id | escape }}">{{ entry.title | escape }}</a></h3>
+            <p>{{ entry.timeline_summary | escape }}</p>
+          {% else %}
+            <h3>{{ entry.title | escape }}</h3>
+            {% if entry.event %}<p class="research-affiliation">{{ entry.event | escape }}</p>{% endif %}
+            {% if entry.description %}<p>{{ entry.description | escape }}</p>{% endif %}
+            {% assign related_project = site.data.research.projects | where: 'id', entry.project | first %}
+            {% if related_project %}
+              <p class="research-related">Related project: <a href="#{{ related_project.id | escape }}">{{ related_project.title | escape }}</a></p>
+            {% endif %}
+            {% include research-materials.html talk=entry %}
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ol>
+    <p class="research-timeline-tail">More to explore.</p>
+  </section>
+</div>

@@ -1,0 +1,38 @@
+interests:
+  - title: Reinforcement Learning & LLM Post-Training
+    description: Learning from feedback to improve how language models reason, act, and refine their decisions over multiple turns.
+  - title: LLM Serving & Inference Optimization
+    description: Making LLM systems more efficient by understanding the trade-offs among cost, latency, and quality.
+  - title: Agent Harness & Context Management
+    description: Improving the systems around an agent, especially how it retains, compresses, and reuses context over long trajectories.
+
+# The date is the project start date and determines its position on the timeline.
+projects:
+  - id: molecular-optimization
+    type: project
+    date: "2026-02-01"
+    period: Feb. – Jun. 2026
+    title: Fragment-Level Molecular Optimization with LLM Post-Training
+    institution: Mila – Quebec AI Institute & Université de Montréal
+    role: Remote Research Assistant
+    advisor: Prof. Bang Liu
+    timeline_summary: Exploring molecular optimization through fragment edits and multi-turn reinforcement learning.
+    points:
+      - Explored multi-objective molecular optimization with an LLM-based Analyse–Plan–Edit–Verify workflow under constraints on QED, LogP, and molecular weight.
+      - Built a 4,200-example dataset covering property analysis, edit planning, fragment modification, and verification for supervised fine-tuning and reinforcement learning.
+      - Decomposed molecular generation into fragment addition, deletion, and replacement using locally editable BRICS fragments.
+      - Developed multi-turn GRPO experiments with composite rewards for molecular validity, property alignment, and structural similarity, and investigated training stability across edit trajectories.
+    code: https://github.com/ZhaoYangPL/Fragment-Level-Molecular-Optimization-with-LLM-Post-Training
+  - id: context-compaction
+    type: project
+    date: "2026-08-01"
+    period: Aug. 2026 – Present
+    title: Adaptive Context Compaction for Long-Horizon LLM Agents
+    institution: Zhejiang University
+    role: Undergraduate Researcher
+    advisor: Prof. Zhiyu Zhang
+    timeline_summary: Studying when an agent should compact its context, and what that decision costs in information and computation.
+    points:
+      - Studied fixed-threshold context compaction in production coding-agent harnesses and identified a critical trade-off between retaining task-relevant information and preserving prompt-cache reuse.
+      - Characterizing cost, quality, and latency curves as the compaction threshold varies, to understand when compaction helps and when its overhead outweighs its benefits.
+      - Developing a training-free online decision rule for whether and when to compact, balancing context-budget pressure against summarization overhead, cache-recomputation cost, and the risk of discarding information needed later in the trajectory.

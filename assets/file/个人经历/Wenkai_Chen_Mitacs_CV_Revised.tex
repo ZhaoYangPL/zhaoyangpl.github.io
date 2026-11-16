@@ -1,0 +1,90 @@
+\documentclass[10pt,letterpaper]{article}
+
+\usepackage[letterpaper,margin=0.6in]{geometry}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{microtype}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\definecolor{accent}{HTML}{17365D}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\linespread{1.02}
+\setlist[itemize]{leftmargin=1.3em,itemsep=3pt,topsep=4pt,parsep=1pt}
+\titleformat{\section}{\large\bfseries\color{accent}}{}{0pt}{}[\vspace{-1pt}\color{accent}\titlerule]
+\titlespacing*{\section}{0pt}{12pt}{6pt}
+\urlstyle{same}
+
+\newcommand{\entry}[4]{%
+  \begin{tabularx}{\textwidth}{@{}Xr@{}}
+    \textbf{#1} & \textbf{#2} \\[1pt]
+    \textit{#3} & \textit{#4}
+  \end{tabularx}\par\nobreak\vspace{4pt}
+}
+
+\begin{document}
+\fontsize{10.5pt}{12.7pt}\selectfont
+
+\begin{center}
+  {\LARGE\bfseries WENKAI CHEN}\\[3pt]
+  \small
+  Email: \href{mailto:weekend.chen@zju.edu.cn}{weekend.chen@zju.edu.cn}
+  \quad\textbar\quad
+  Phone: +86 190 3395 5822
+  \quad\textbar\quad
+  Web: \href{https://zhaoyangpl.github.io}{zhaoyangpl.github.io}
+  \quad\textbar\quad
+  GitHub: \href{https://github.com/ZhaoYangPL}{ZhaoYangPL}
+\end{center}
+\vspace{-8pt}
+
+\section*{RESEARCH INTERESTS}
+\begin{itemize}[itemsep=0pt,topsep=1pt]
+  \item Reinforcement learning and LLM post-training.
+  \item Optimization of LLM serving and inference.
+  \item Agent harness optimization, with a focus on context management.
+\end{itemize}
+
+\section*{EDUCATION}
+\entry{Zhejiang University}{Hangzhou, China}{Dual Bachelor's Degree Program}{Sep. 2024 -- Jun. 2028 (expected)}
+\par\textit{Statistics and Information Management \& Information Systems}\par
+\begin{itemize}
+  \item GPA: \textbf{88.22/100}; rank: \textbf{2/20}.
+  \item Selected coursework: Practical Optimization Methods, Combinatorial Optimization, Time Series Analysis, Multivariate Analysis, and Stochastic Processes.
+\end{itemize}
+
+\section*{RESEARCH EXPERIENCE}
+\entry{Undergraduate Researcher}{Hangzhou, China}{Zhejiang University}{Aug. 2026 -- Present}
+\textbf{Adaptive Context Compaction for Long-Horizon LLM Agents} \hfill \textit{Advisor: Prof. Zhiyu Zhang}
+\begin{itemize}
+  \item Studied fixed-threshold context compaction in production coding-agent harnesses and identified a critical trade-off between retaining task-relevant information and preserving \textbf{prompt-cache reuse}.
+  \item Characterizing the \textbf{cost, quality, and latency curves} as the compaction threshold varies, to understand when compaction helps and when its overhead outweighs its benefits.
+  \item Developing a \textbf{training-free online decision rule} for whether and when to compact, balancing context-budget pressure against summarization overhead, cache-recomputation cost, and the risk of discarding information needed later in the trajectory.
+\end{itemize}
+
+\entry{Remote Research Assistant}{Montr\'eal, Canada / Remote}{Mila--Quebec AI Institute and Universit\'e de Montr\'eal}{Feb. 2026 -- Jun. 2026}
+\textbf{Fragment-Level Molecular Optimization with LLM Post-Training} \hfill \textit{Advisor: Prof. Bang Liu} \;\textbar\; \href{https://github.com/ZhaoYangPL/Fragment-Level-Molecular-Optimization-with-LLM-Post-Training}{\texttt{GitHub}}
+\begin{itemize}
+  \item Explored multi-objective molecular optimization with an LLM-based Analyse--Plan--Edit--Verify workflow under constraints on QED, LogP, and molecular weight.
+  \item Built a \textbf{4,200-example} dataset that decomposes optimization into property analysis, edit planning, fragment modification, and verification, supporting supervised fine-tuning and subsequent reinforcement-learning experiments.
+  \item Decomposed molecular generation into \textbf{fragment addition, deletion, and replacement} using locally editable BRICS fragments, enabling structured, multi-step optimization.
+  \item Developed \textbf{multi-turn GRPO experiments} for LLM post-training, designing composite rewards for molecular validity, property alignment, and structural similarity, and investigating training stability across edit trajectories.
+\end{itemize}
+
+\section*{HONORS AND AWARDS}
+\begin{tabularx}{\textwidth}{@{}Xr@{}}
+  \textbf{Future Academic Star, Zhejiang University} --- CNY 50,000 research award & 2026--2027 \\
+  \textbf{Honorable Mention, Mathematical Contest in Modeling (MCM/ICM)}  & 2025 \\
+  \textbf{First Prize, National College Student Mathematics Competition} & 2025\\
+  \textbf{Second-Class Scholarship, Zhejiang University}  & 2025
+\end{tabularx}
+
+\par\vspace{12pt}
+{\footnotesize Last updated: November 16, 2026}
+
+\end{document}

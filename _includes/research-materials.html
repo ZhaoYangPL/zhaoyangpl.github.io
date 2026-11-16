@@ -1,0 +1,22 @@
+{% if include.talk.video_file %}
+  <video class="research-recording" controls playsinline preload="none" aria-label="Recording: {{ include.talk.title | escape }}">
+    <source src="{% if include.talk.video_file contains '://' %}{{ include.talk.video_file | escape }}{% else %}{{ include.talk.video_file | relative_url | escape }}{% endif %}" type="video/mp4">
+    Your browser does not support embedded video. <a href="{% if include.talk.video_file contains '://' %}{{ include.talk.video_file | escape }}{% else %}{{ include.talk.video_file | relative_url | escape }}{% endif %}">Download the recording</a>.
+  </video>
+{% endif %}
+{% assign material_types = 'recording,slides,notes' | split: ',' %}
+{% if include.talk.recording or include.talk.slides or include.talk.notes %}
+  <ul class="research-materials" aria-label="Talk materials">
+    {% for material_type in material_types %}
+      {% assign material_url = include.talk[material_type] %}
+      {% if material_url %}
+        <li>
+          <a class="research-resource" href="{% if material_url contains '://' %}{{ material_url | escape }}{% else %}{{ material_url | relative_url | escape }}{% endif %}">
+            {% case material_type %}{% when 'recording' %}Watch recording{% when 'slides' %}Slides{% when 'notes' %}Notes{% endcase %}
+            <span aria-hidden="true">&nearr;</span>
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+{% endif %}
