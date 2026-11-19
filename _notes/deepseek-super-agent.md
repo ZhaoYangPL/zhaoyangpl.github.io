@@ -171,7 +171,6 @@ Several open questions follow. A single Router may become a bottleneck as tasks 
 
 ## Related materials
 
-- **Talk slides:** [DeepSeek Super-agent - November 18, 2026 (PowerPoint)]({{ '/assets/file/Notes/deepseek-superagent-talk-2026-11-18.pptx' | relative_url }}).
 - **Public prototype:** [README][readme], [philosophy][philosophy], [domain model][domain], [authorization][authorization], [execution][execution], and [architecture][architecture].
 - **Code:** [event processing][passes], [intake][intake], [evaluation][evals], [policy gate][policy-code], and [assessment][assessment].
 
