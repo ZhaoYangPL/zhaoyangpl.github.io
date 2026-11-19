@@ -8,14 +8,22 @@ layout: page
 
 <div id="notes">
   {% if notes.size > 0 %}
-    <ul class="content ps-0">
+    <ul class="notes-list">
     {% for note in notes %}
-      <li class="d-flex justify-content-between px-md-3">
-        <a href="{{ note.url | relative_url }}">{{ note.title | escape }}</a>
-        <span class="dash flex-grow-1"></span>
-        {% if note.date %}
-          {% include datetime.html date=note.date class='text-muted small text-nowrap' lang=lang %}
-        {% endif %}
+      <li>
+        <a class="notes-entry" href="{{ note.url | relative_url }}">
+          <span class="notes-entry-title">{{ note.title | escape }}</span>
+          {% if note.date %}
+            <time datetime="{{ note.date | date_to_xmlschema }}">{{ note.date | date: '%b %d, %Y' }}</time>
+          {% endif %}
+          {% if note.tags.size > 0 %}
+            <span class="note-tags" aria-label="Tags">
+              {% for tag in note.tags %}
+                <span class="note-tag">{{ tag | escape }}</span>
+              {% endfor %}
+            </span>
+          {% endif %}
+        </a>
       </li>
     {% endfor %}
     </ul>

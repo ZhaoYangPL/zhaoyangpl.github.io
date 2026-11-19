@@ -1,0 +1,12 @@
+<div class="note-meta">
+  {% if page.date %}
+    <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%b %d, %Y' }}</time>
+  {% endif %}
+  {% if page.tags.size > 0 %}
+    <span class="note-tags" aria-label="Tags">
+      {% for tag in page.tags %}
+        <span class="note-tag">{{ tag | escape }}</span>
+      {% endfor %}
+    </span>
+  {% endif %}
+</div>
