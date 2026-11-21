@@ -2,8 +2,7 @@
   <details class="talk-video{% if include.talk.video_poster %} has-preview{% endif %}">
     <summary aria-label="Video: {{ include.talk.title | escape }}">
       {% if include.talk.video_poster %}
-        <span class="talk-video-preview">
-          <img src="{{ include.talk.video_poster | relative_url | escape }}" width="1280" height="720" alt="" loading="lazy">
+        <span class="talk-video-preview" style="background-image: url('{{ include.talk.video_poster | relative_url | escape }}')">
           <span class="talk-video-play"><i class="fas fa-play" aria-hidden="true"></i></span>
           {% if include.talk.video_duration %}<span class="talk-video-duration">{{ include.talk.video_duration | escape }}</span>{% endif %}
         </span>
