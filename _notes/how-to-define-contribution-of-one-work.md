@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "how to define contribution of one work"
+title: "How to Define Contribution of One Work"
 date: 2026-11-21 00:00:00 +0800
 tags: [Research Taste, Research Reflections]
 description: "Beyond Better Results: What Makes Research Worth Pursuing? Reflections on research contributions and research taste."
