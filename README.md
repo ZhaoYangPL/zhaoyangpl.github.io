@@ -54,7 +54,7 @@ To add a talk, append an entry to `_data/talks.yml`. The timeline merges talks w
   lesson: "One concrete lesson to carry into the next talk."
 ```
 
-All material fields are optional: only supplied links appear. Direct videos open from a compact Video button and pause when collapsed. Add a `lesson` to each talk to display a reflection below its materials. A hosted recording is usually preferable for large videos. Local paths must start with `/`; external links must be full URLs. The example is a template, not a published talk.
+All material fields are optional: only supplied links appear. Direct videos open from a compact preview and pause when collapsed. Set `video_poster` to show a 16:9 thumbnail of the recording. Add a `lesson` to each talk to display a reflection below its materials. A hosted recording is usually preferable for large videos. Local paths must start with `/`; external links must be full URLs. The example is a template, not a published talk.
 
 ## Notes and materials
 
