@@ -3,7 +3,7 @@
   {% for entry in timeline_entries %}
     <li class="research-timeline-entry {% if entry.type == 'project' %}is-project{% else %}is-talk{% endif %}">
       <div class="research-timeline-meta">
-        <time datetime="{{ entry.date | escape }}">{% if entry.type == 'project' %}{{ entry.date | date: '%b %Y' }}{% else %}{{ entry.date | date: '%b %-d, %Y' }}{% endif %}</time>
+        <time datetime="{{ entry.date | escape }}">{% if entry.type == 'project' %}{{ entry.date | date: '%b %Y' }}{% else %}{{ entry.date | date: '%y.%m.%d' }}{% endif %}</time>
         <span class="research-entry-type">{% if entry.type == 'project' %}Project started{% else %}Talk{% endif %}</span>
       </div>
       {% if entry.type == 'project' %}
@@ -18,6 +18,12 @@
           <p class="research-related">Related project: <a href="{{ '/research/' | relative_url }}#{{ related_project.id | escape }}">{{ related_project.title | escape }}</a></p>
         {% endif %}
         {% include research-materials.html talk=entry %}
+        {% if entry.lesson %}
+          <div class="talk-lesson">
+            <h4>Lesson</h4>
+            <p>{{ entry.lesson | escape }}</p>
+          </div>
+        {% endif %}
       {% endif %}
     </li>
   {% endfor %}

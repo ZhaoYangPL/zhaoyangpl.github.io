@@ -375,6 +375,83 @@ html[data-mode='dark'] .research-page {
   font-size: 0.85rem;
 }
 
+.talk-video {
+  margin: 1rem 0;
+}
+
+.talk-video > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: fit-content;
+  min-height: 2.75rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--main-border-color);
+  border-radius: 0.5rem;
+  background: var(--card-bg);
+  color: var(--research-accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+
+.talk-video > summary::-webkit-details-marker {
+  display: none;
+}
+
+.talk-video > summary:hover {
+  background: var(--weekend-accent-soft);
+}
+
+.talk-video > summary:focus-visible {
+  outline: 2px solid var(--research-accent);
+  outline-offset: 3px;
+}
+
+.talk-video-duration {
+  color: var(--text-muted-color);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 400;
+}
+
+.talk-video-chevron {
+  font-size: 0.7rem;
+}
+
+.talk-video[open] .talk-video-chevron {
+  transform: rotate(180deg);
+}
+
+.talk-video .research-recording {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  margin: 1rem 0 0;
+  border-radius: 0.6rem;
+  background: #111;
+}
+
+.talk-lesson {
+  margin-top: 1.25rem;
+  padding: 0.1rem 0 0.1rem 1rem;
+  border-left: 2px solid var(--research-line);
+}
+
+.research-page .talk-lesson h4 {
+  margin: 0 0 0.35rem;
+  color: var(--research-accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.research-page .talk-lesson p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
 .private-lock {
   margin-right: 0.25rem;
   color: #b47716;

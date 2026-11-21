@@ -1,3 +1,8 @@
 # Add talks here in any order; the research timeline sorts them by date.
-# See README.md for the fields and a copyable example.
-[]
+- date: "2026-11-20"
+  title: "Is fixed threshold good enough in Context Management"
+  project: context-compaction
+  video_file: /assets/video/context-management-2026-11-20.mp4
+  video_poster: /assets/video/context-management-2026-11-20.jpg
+  video_duration: "9:35"
+  lesson: "Start with a concrete, relatable example before introducing the technical problem, rather than jumping straight into the core topic."

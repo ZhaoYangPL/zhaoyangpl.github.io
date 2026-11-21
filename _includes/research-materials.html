@@ -1,8 +1,17 @@
 {% if include.talk.video_file %}
-  <video class="research-recording" controls playsinline preload="none" aria-label="Recording: {{ include.talk.title | escape }}">
-    <source src="{% if include.talk.video_file contains '://' %}{{ include.talk.video_file | escape }}{% else %}{{ include.talk.video_file | relative_url | escape }}{% endif %}" type="video/mp4">
-    Your browser does not support embedded video. <a href="{% if include.talk.video_file contains '://' %}{{ include.talk.video_file | escape }}{% else %}{{ include.talk.video_file | relative_url | escape }}{% endif %}">Download the recording</a>.
-  </video>
+  <details class="talk-video">
+    <summary aria-label="Video: {{ include.talk.title | escape }}">
+      <i class="fas fa-play" aria-hidden="true"></i>
+      <span>Video</span>
+      {% if include.talk.video_duration %}<span class="talk-video-duration">{{ include.talk.video_duration | escape }}</span>{% endif %}
+      <i class="fas fa-chevron-down talk-video-chevron" aria-hidden="true"></i>
+    </summary>
+    <video class="research-recording" controls playsinline preload="none"{% if include.talk.video_poster %} poster="{{ include.talk.video_poster | relative_url | escape }}"{% endif %} aria-label="Recording: {{ include.talk.title | escape }}">
+      <source src="{% if include.talk.video_file contains '://' %}{{ include.talk.video_file | escape }}{% else %}{{ include.talk.video_file | relative_url | escape }}{% endif %}" type="video/mp4">
+      Your browser does not support embedded video. <a href="{% if include.talk.video_file contains '://' %}{{ include.talk.video_file | escape }}{% else %}{{ include.talk.video_file | relative_url | escape }}{% endif %}">Download the recording</a>.
+    </video>
+  </details>
+  <script type="module" src="{{ '/assets/js/talk-video.js' | relative_url }}"></script>
 {% endif %}
 {% assign material_types = 'recording,slides,notes' | split: ',' %}
 {% if include.talk.recording or include.talk.slides or include.talk.notes %}

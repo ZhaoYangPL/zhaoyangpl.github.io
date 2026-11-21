@@ -36,7 +36,7 @@ npm.cmd test
 
 ## Research talks and materials
 
-To add a talk, replace the empty `[]` in `_data/talks.yml` with a list, or append to the existing list. The timeline merges talks with project start dates and sorts them chronologically. Use a project ID from `_data/research.yml` to connect a talk to its project.
+To add a talk, append an entry to `_data/talks.yml`. The timeline merges talks with project start dates and sorts them chronologically. Use a project ID from `_data/research.yml` to connect a talk to its project.
 
 ```yaml
 - date: "2026-12-01" # Replace with the actual talk date.
@@ -49,9 +49,12 @@ To add a talk, replace the empty `[]` in `_data/talks.yml` with a list, or appen
   notes: /posts/your-talk-notes/
   # Optional: a direct MP4 URL or site path adds a native video player.
   # video_file: /assets/video/your-talk.mp4
+  # video_poster: /assets/video/your-talk.jpg
+  # video_duration: "9:35"
+  lesson: "One concrete lesson to carry into the next talk."
 ```
 
-All material fields are optional: only supplied links appear. A hosted recording is usually preferable for large videos. Local paths must start with `/`; external links must be full URLs. The example is a template, not a published talk.
+All material fields are optional: only supplied links appear. Direct videos open from a compact Video button and pause when collapsed. Add a `lesson` to each talk to display a reflection below its materials. A hosted recording is usually preferable for large videos. Local paths must start with `/`; external links must be full URLs. The example is a template, not a published talk.
 
 ## Notes and materials
 
