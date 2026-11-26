@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Sparse and Linear Attention: Selection, Memory, and Online Learning"
+title: "Sparse and Linear Attention"
 date: 2026-11-26 00:00:00 +0800
 tags: [Attention, Linear Attention, Memory]
 description: "Brief seminar notes on sparse retrieval, recurrent memory, and the online learning view of attention."
@@ -57,15 +57,17 @@ Kernelized variants instead use a separable similarity $\phi(q)^\top\phi(k)$, ma
 
 Compression introduces interference: nonorthogonal keys share memory directions. Repeatedly adding outer products also keeps writing an association even when it is already stored correctly.
 
-## 4. DeltaNet: learn from the prediction error
+## 4. Evolving the loss: from correlation to regression
 
-Treat the state as an online regression model. One gradient step on
+The memory updates become easier to understand through their learning objectives. Vanilla linear attention takes a gradient step on the negative inner-product loss $\ell_t(S)=-\langle S^\top k_t,v_t\rangle$, producing an additive outer-product update. Its gradient remains nonzero even when the association is already correct, so it keeps reinforcing the same information.
+
+**DeltaNet** replaces this correlation objective with squared prediction error:
 
 $$
 \ell_t(S)=\tfrac12\|S^\top k_t-v_t\|^2
 $$
 
-gives the delta rule:
+One gradient step now gives the delta rule:
 
 $$
 S_t=S_{t-1}+\beta_tk_t(v_t-S_{t-1}^\top k_t)^\top.
@@ -73,9 +75,11 @@ $$
 
 The update reads the existing association and writes its residual. With a unit-norm key and $\beta_t=1$, it exactly replaces the association along that key, although other nonorthogonal associations can still change.
 
-**Gated DeltaNet** first decays the old state by a scalar; **Kimi Delta Attention** uses channel-wise decay. Both add control over forgetting to error-driven writing. This online learning view was the talk's most illuminating shift for me: designing attention becomes designing how a limited memory learns.
+**Gated DeltaNet** adds scalar decay before the regression step; **Kimi Delta Attention** makes that decay channel-wise. The progression is from maximizing correlation, to correcting prediction error, to controlling how long learned associations survive. This online learning view was the talk's most illuminating shift for me: designing attention becomes designing how a limited memory learns.
 
-## 5. State transitions connect memory and position
+## 5. RoPE and content-dependent state transitions
+
+RoPE rotates queries and keys by their positions. For a fixed one-step rotation $R$, its score is $(R^tq_t)^\top(R^jk_j)=q_t^\top(R^\top)^{t-j}k_j$: only the relative offset remains.
 
 For $S_t=A_tS_{t-1}+\beta_tk_tv_t^\top$, with $S_0=0$, expanding the recurrence yields
 
@@ -84,7 +88,7 @@ o_t=\sum_{j\le t}\beta_j
 \bigl(q_t^\top A_t\cdots A_{j+1}k_j\bigr)v_j.
 $$
 
-RoPE has a related score structure, with repeated fixed rotations between query and key. Here the transitions can depend on intervening tokens and include decay or directional erasure. This is an algebraic connection; general gated transitions need not be rotations or preserve norms.
+Setting every $A_t=R^\top$ recovers RoPE's score structure. In gated linear attention, the transitions can instead depend on intervening tokens and include decay or directional erasure. RoPE tracks relative distance; these transitions can also reflect what happened in between. This is an algebraic connection; general gated transitions need not be rotations or preserve norms.
 
 For my work on agent context management, this suggests three connected questions: **what should the harness retain, what should attention retrieve, and how should internal memory evolve?** Hybrid architectures combine explicit retrieval with recurrent compression. Lower computational cost still leaves information quality and memory interference as central problems.
 
